@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Book } from 'src/app/library-page/models/Book';
+import { LibraryService } from 'src/app/library-page/services/library.service';
 
 @Component({
   selector: 'app-book-page',
@@ -9,15 +11,30 @@ import { Book } from 'src/app/library-page/models/Book';
 export class BookPageComponent implements OnInit {
   book: Book
 
-  constructor() { }
+  constructor(
+    private libraryService: LibraryService,
+    private activatedRoute: ActivatedRoute
+    ) { }
 
   ngOnInit(): void {
-    this.book =   {
-      description: "Descrtipion 1",
-      genres: [],
-      id: "1",
-      name: "Test book 1"
-    };
+    this.activatedRoute.paramMap.subscribe(el => {
+      var id = el.get('id');
+      console.log(id);
+      if (!!id) {
+        this.libraryService.getBookById(el.get('id')).subscribe(result => {
+          this.book = result;
+        })
+      }
+    });
+  }
+
+  firstLetter() {
+    return this.book.description[0];
+  }
+
+  description() {
+    return this.book.description.substr(1);
+
   }
 }
 

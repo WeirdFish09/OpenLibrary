@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Book } from '../../models/Book';
+import { LibraryService } from '../../services/library.service';
 
 @Component({
   selector: 'app-book-list',
@@ -9,26 +10,13 @@ import { Book } from '../../models/Book';
 export class BookListComponent implements OnInit {
   public bookList: Book[];
 
-  constructor() { }
+  constructor(private libraryService: LibraryService) { }
 
   ngOnInit(): void {
-    this.bookList = books;
+    console.log('init');
+    this.libraryService.getBooks().subscribe(result => {
+      this.bookList = result;
+      console.log('inited');
+    }); 
   }
 }
-
-
-const books: Book[] = [
-  {
-    description: "Descrtipion 1",
-    genres: [],
-    id: "1",
-    imageLink: "https://pi.tedcdn.com/r/talkstar-assets.s3.amazonaws.com/production/playlists/playlist_398/reconnect_with_nature_1200x627.jpg?quality=89&w=1200",
-    name: "Test book 1"
-  },
-  {
-    description: "Descrtipion 1",
-    genres: [],
-    id: "1",
-    name: "Test book 1"
-  }
-];

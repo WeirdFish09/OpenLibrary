@@ -1,10 +1,10 @@
-<div class="book">
+<div class="book" (click)="openBook()">
     <div class="image">
         <img src="{{ book.imageLink }}">
     </div>
     <div class="data">
         <div class="name">
-            {{ book.name }}
+            {{ book.title }}
         </div>
         <div class="description">
             {{ book.description }}

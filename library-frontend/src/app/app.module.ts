@@ -7,6 +7,9 @@ import { HeaderModule } from './header/header.module';
 import { LibraryPageModule } from './library-page/library-page.module';
 import { MaterialDataModule } from './material-data/material-data.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from 'src/environments/environment';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UrlInterceptor } from './interceptors/url.interceptor';
 
 @NgModule({
   declarations: [
@@ -18,11 +21,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderModule,
     LibraryPageModule,
     MaterialDataModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   exports: [
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UrlInterceptor,
+      multi: true,
+    },
+    { provide: "BASE_API_URL", useValue: environment.apiUrl }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

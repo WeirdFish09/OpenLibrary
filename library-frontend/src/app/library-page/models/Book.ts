@@ -1,9 +1,10 @@
 import { Genre } from "./Genre";
 
 export interface Book {
-    id: string;
-    name: string;
+    bookId: string;
+    title: string;
     description: string;
     imageLink?: string;
+    author: string;
     genres: Genre[];
 }
