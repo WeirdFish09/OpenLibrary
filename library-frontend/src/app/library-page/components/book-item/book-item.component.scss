@@ -1,0 +1,29 @@
+@import 'src/styles/variables.scss';
+
+.book {
+    width: 100%;
+    height: 100%;
+    border: 1px solid $accent-color;
+    border-radius: 3px;
+    padding: 10px;
+
+    .image {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+            max-height: 200px;
+            max-width: 100%;
+        }
+    }
+
+    .name {
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+    .description {
+
+    }
+}
