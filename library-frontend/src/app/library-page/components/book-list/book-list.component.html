@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="header-line">
+        <div class="name">
+            Books list
+        </div>
+
+        <div class="search-box">
+            <mat-icon matPrefix size="small">search</mat-icon>
+            <input placeholder="Search for books">
+        </div>
+    </div>
+    <div class="line"></div>
+    <div class="books">
+        <app-book-item *ngFor="let book of bookList" [book]="book"></app-book-item>
+    </div>
+</div>

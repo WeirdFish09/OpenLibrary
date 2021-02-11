@@ -1,0 +1,22 @@
+<div class="book-page">
+    <div class="book-picture">
+        <img src="{{ book.imageLink }}">
+    </div>
+    <div class="book-data">
+        <div class="title">
+            {{ book.title }}
+        </div>
+        <div class="metadata">
+            <div class="author">
+                Author: <a href="#"> {{ book.author }} </a>
+            </div>
+            <div class="genres">
+                Genres: <a href="#"> hardcoded value </a>
+            </div>
+        </div>
+        <div class="description">
+            <span class="initial-letter">{{ firstLetter() }}</span>
+            {{ description() }}
+        </div>
+    </div>
+</div>
