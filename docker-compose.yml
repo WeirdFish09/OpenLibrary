@@ -1,0 +1,25 @@
+version: "3.3"
+services:
+    db:
+        image: postgres:11
+        container_name: libdb
+        ports:
+            - 5433:5432
+        environment:
+            POSTGRES_PASSWORD: openlibrary
+            POSTGRES_USER: openlibrary
+            PGDATA : /var/lib/postgresql/data
+        volumes:
+            - data:/var/lib/postgresql/data
+    front-end:
+        build: ./library-frontend
+        container_name: front-end
+        ports:
+            - 4200:4200
+        command: >
+            bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
+
+    
+volumes: 
+    data: 
+        driver: local
