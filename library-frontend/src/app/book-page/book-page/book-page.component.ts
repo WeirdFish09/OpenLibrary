@@ -19,7 +19,7 @@ export class BookPageComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(el => {
       var id = el.get('id');
-      console.log(id);
+
       if (!!id) {
         this.libraryService.getBookById(el.get('id')).subscribe(result => {
           this.book = result;

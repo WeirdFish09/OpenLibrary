@@ -13,10 +13,8 @@ export class BookListComponent implements OnInit {
   constructor(private libraryService: LibraryService) { }
 
   ngOnInit(): void {
-    console.log('init');
     this.libraryService.getBooks().subscribe(result => {
       this.bookList = result;
-      console.log('inited');
     }); 
   }
 }
