@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OpenLibraryServer.Models;
 using OpenLibraryServer.Models.DTOs;
+using OpenLibraryServer.Service.Exceptions;
 using OpenLibraryServer.Service.Interfaces;
 
 namespace OpenLibraryServer.Web.Controllers
@@ -27,7 +28,10 @@ namespace OpenLibraryServer.Web.Controllers
         [HttpGet("{bookId}")]
         public async Task<BookTO> GetById([FromRoute] string bookId)
         {
-            var guid = Guid.Parse(bookId);
+            if (!Guid.TryParse(bookId, out Guid guid))
+            {
+                throw new InvalidFormatException($"String {bookId} is not a valid Guid");
+            }
             return await _bookService.GetById(guid);
         }
         [HttpGet]

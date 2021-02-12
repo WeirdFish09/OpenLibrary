@@ -57,6 +57,8 @@ namespace OpenLibraryServer.Web
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseHttpsRedirection();
             app.UseCors(options =>
             {
                 options.AllowAnyMethod()
