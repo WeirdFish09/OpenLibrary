@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '../models/Book';
+import { BookData } from '../models/BookData';
+import { Filter } from '../models/Filter';
+import { Genre } from '../models/Genre';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +11,15 @@ import { Book } from '../models/Book';
 export class LibraryService {
   constructor(private http: HttpClient) { }
 
-  getBooks() {
-    return this.http.get<Book[]>("books?count=10&offset=0");
+  getBooks(filter: Filter) {
+    return this.http.post<BookData>("books/filter", filter);
   }
   
   getBookById(id: string) {
     return this.http.get<Book>(`books/${id}`);
+  }
+
+  getGenres() {
+    return this.http.get<Genre[]>('books/genres');
   }
 }

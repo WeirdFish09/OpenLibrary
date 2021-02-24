@@ -3,7 +3,25 @@
     padding: 30px 3%;
     height: calc(100vh - 75px);
     background: #1e1e1e;
+
+    > div {
+        display: flex;
+    }
+}
+
+.header {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .toChat {
+        color: #aaaaaa;
+        text-decoration: underline;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
 }
 
 .book-picture {
@@ -43,6 +61,24 @@
             a {
                 color: #41739b;
                 text-decoration: none;
+                cursor: pointer;
+            }
+        }
+
+        .genres {
+            span {
+                cursor: pointer;
+                display: inline-block;
+                margin: 0 3px;
+                padding: 0 5px;
+                color: #cccccc;
+                border-radius: 3px;
+                background: #494949;
+
+                &:hover {
+                    background: #cccccc;
+                    color: #494949;
+                }
             }
         }
     }

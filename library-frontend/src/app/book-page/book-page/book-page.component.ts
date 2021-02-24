@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Book } from 'src/app/library-page/models/Book';
+import { ChatService } from 'src/app/library-page/services/chat.service';
 import { LibraryService } from 'src/app/library-page/services/library.service';
 
 @Component({
@@ -13,7 +14,9 @@ export class BookPageComponent implements OnInit {
 
   constructor(
     private libraryService: LibraryService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private chatService: ChatService,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -32,9 +35,26 @@ export class BookPageComponent implements OnInit {
     return this.book.description[0];
   }
 
+  searchByAuthor() {
+    this.router.navigate([''], { queryParams: { author: this.book.author } });
+  }
+
+  searchByGenre(genreId: number) {
+    this.router.navigate([''], { queryParams: { genreId: genreId } });
+  }
+
   description() {
     return this.book.description.substr(1);
+  }
 
+  goToChat(event: Event): void {
+    event.stopImmediatePropagation();
+    
+    window.open(`http://localhost:4200/chat/${this.book.chatId}`,"_self")
+    this.router.navigate(['/chat', this.book.chatId]);
+    this.chatService.assignToChat().subscribe(_ => {
+      this.router.navigate(['/chat', this.book.chatId]);
+    });
   }
 }
 

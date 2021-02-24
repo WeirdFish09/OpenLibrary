@@ -16,9 +16,28 @@
     padding-left: 15px;
 
     .name {
-        font-size: 36px;
-        font-weight: 500;
         color: #e5e5e5;
+        display: flex;
+        align-items: center;
+
+        .title {
+            font-size: 36px;
+            font-weight: 500;
+            margin-right: 20px;
+        }
+
+        .add_button {
+            color: #cccccc;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px 10px 5px 5px;
+
+            &:hover {
+                color: #e5e5e5;
+            }
+        }
     }
     
     .search-box {
@@ -42,10 +61,79 @@
     border-bottom: 1px solid #414141;
 }
 
+.book-list {
+    display: grid;
+    grid-template-columns: auto 230px;
+}
+
 .books {
+    height: fit-content;
     padding-top: 30px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     grid-template-rows: repeat(auto-fill, max-content);
     gap: 30px 20px;
+}
+
+.search-data {
+    position: sticky;
+    padding: 30px 20px;
+    
+    .seach-name {
+        font-size: 24px;
+        color: #cccccc;
+    }
+
+    .author {
+        margin-bottom: 20px;
+
+        input {
+            outline: none;
+            border: 0;
+            background: none;
+            border: none;
+            border-bottom: 1px solid #414141;
+            padding: 5px;
+            color: white;
+        }
+    }
+    .genres {
+        color: #aaaaaa;
+        
+        .seach-name {
+            margin-bottom: 10px;
+        }
+
+        .genres-list {
+            height: 50vh;
+            overflow: auto;
+        }
+
+        .genre-name {
+            input {
+                margin-right: 5px;
+            }
+
+            margin: 3px 0 0 20px;
+        }
+    }
+}
+
+.pages {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    .page-number {
+        margin: 0 6px;
+        color: #aaaaaa;
+        cursor: pointer;
+        padding: 3px 5px;
+        border-radius: 3px;
+    }
+    .active {
+        color: #cccccc;
+        background: #494949;;
+    }
 }

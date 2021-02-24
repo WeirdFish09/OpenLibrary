@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Book } from '../../models/Book';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-book-item',
@@ -10,13 +11,22 @@ import { Book } from '../../models/Book';
 export class BookItemComponent implements OnInit {
   @Input() book: Book;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private chatService: ChatService) { }
 
   ngOnInit(): void {
   }
 
   openBook(): void {
-    console.log(this.book.bookId)
     this.router.navigateByUrl(`/book/${this.book.bookId}`);
+  }
+
+  goToChat(event: Event): void {
+    event.stopImmediatePropagation();
+    
+    window.open(`http://localhost:4200/chat/${this.book.chatId}`,"_self")
+    this.router.navigate(['/chat', this.book.chatId]);
+    this.chatService.assignToChat().subscribe(_ => {
+      this.router.navigate(['/chat', this.book.chatId]);
+    });
   }
 }

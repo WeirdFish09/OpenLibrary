@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UrlInterceptor } from './interceptors/url.interceptor';
+import { FormsModule } from '@angular/forms';
+import { BookPageModule } from './book-page/book-page.module';
 
 @NgModule({
   declarations: [
@@ -20,9 +22,11 @@ import { UrlInterceptor } from './interceptors/url.interceptor';
     AppRoutingModule,
     HeaderModule,
     LibraryPageModule,
+    BookPageModule,
     MaterialDataModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   exports: [
   ],

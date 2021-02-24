@@ -8,6 +8,7 @@
     padding: 10px;
     background: #303030;
     cursor: pointer;
+    position: relative;
 
     .image {
         height: 250px;
@@ -45,5 +46,17 @@
 
     &:hover {
         background: #494949;
+    }
+}
+
+.toChat {
+    position: absolute;
+    font-size: 12px;
+    left: calc(100% - 60px);
+    text-decoration: underline;
+    color: #aaaaaa;
+    
+    &:hover {
+        text-decoration: none;
     }
 }
