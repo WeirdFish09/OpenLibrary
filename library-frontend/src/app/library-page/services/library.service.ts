@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Book } from '../models/Book';
 import { BookData } from '../models/BookData';
+import { AddBook } from '../models/books/AddBook';
 import { Filter } from '../models/Filter';
 import { Genre } from '../models/Genre';
 
@@ -21,5 +22,9 @@ export class LibraryService {
 
   getGenres() {
     return this.http.get<Genre[]>('books/genres');
+  }
+  
+  addBook(book: AddBook) {
+    return this.http.post<Book>('books', book);
   }
 }

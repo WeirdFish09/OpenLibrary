@@ -40,6 +40,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     
 }
 
+.mat-form-field-label {
+    color: #cccccc; 
+}
+.mat-select-value-text {
+    color: white;
+}
+.mat-select-arrow {
+    color: #cccccc;
+}
+
+.add-book-dialog-backdrop {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.add-book-dialog {
+    mat-dialog-container {
+        background: #303030;
+        color: #cccccc;
+    }
+}
+
 ::-webkit-scrollbar {
     width: 8px;
 }

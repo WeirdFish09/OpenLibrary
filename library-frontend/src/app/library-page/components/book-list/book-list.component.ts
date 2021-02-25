@@ -1,8 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
+import { AddBookDialogComponent } from 'src/app/components/dialogs/add-book-dialog/add-book-dialog.component';
 import { Book } from '../../models/Book';
+import { AddBook } from '../../models/books/AddBook';
 import { Filter } from '../../models/Filter';
 import { Genre } from '../../models/Genre';
 import { LibraryService } from '../../services/library.service';
@@ -29,7 +32,8 @@ export class BookListComponent implements OnInit, OnDestroy {
   constructor(
     private libraryService: LibraryService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {
     this.activatedRoute.queryParams.subscribe(params => {
       if (params['author'] != null) {
@@ -127,5 +131,25 @@ export class BookListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.getBookSubscription.unsubscribe();
+  }
+
+  addBook() {
+    const dialogRef = this.dialog.open(AddBookDialogComponent, {
+      width: '500px',
+      data: this.genres,
+      panelClass: 'add-book-dialog',
+      backdropClass: 'add-book-dialog-backdrop'
+    });
+
+    dialogRef.afterClosed().subscribe((result: AddBook) => {
+      console.log('The dialog was closed', result);
+
+      if (result != null) {
+        this.libraryService.addBook(result).subscribe(res => {
+          console.log(res);
+          this.bookList = [res, ...this.bookList];
+        })
+      }
+    });
   }
 }

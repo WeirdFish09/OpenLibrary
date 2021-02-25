@@ -10,12 +10,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from 'src/environments/environment';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UrlInterceptor } from './interceptors/url.interceptor';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookPageModule } from './book-page/book-page.module';
+import { AddBookDialogComponent } from './components/dialogs/add-book-dialog/add-book-dialog.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AddBookDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,8 @@ import { BookPageModule } from './book-page/book-page.module';
     MaterialDataModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
   ],
