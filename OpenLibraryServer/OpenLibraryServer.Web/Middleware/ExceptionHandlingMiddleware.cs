@@ -36,6 +36,8 @@ namespace OpenLibraryServer.Web.Middleware
                 NotFoundException => (int) HttpStatusCode.NotFound,
                 AlreadyExistsException => (int) HttpStatusCode.Conflict,
                 InvalidFormatException => (int) HttpStatusCode.BadRequest,
+                BadRequestException => (int) HttpStatusCode.BadRequest,
+                UnauthorizedException => (int) HttpStatusCode.Unauthorized,
                 _ => (int) HttpStatusCode.InternalServerError
             };
             var result = JsonConvert.SerializeObject(new  

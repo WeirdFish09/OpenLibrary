@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using OpenLibraryServer.Models;
 using OpenLibraryServer.Models.DTOs;
 using OpenLibraryServer.Service.Exceptions;
+using OpenLibraryServer.Service.HelperFunctions;
 using OpenLibraryServer.Service.Interfaces;
 
 namespace OpenLibraryServer.Web.Controllers
@@ -15,12 +16,14 @@ namespace OpenLibraryServer.Web.Controllers
     public class BooksController : Controller
     {
         private readonly IBookService _bookService;
+        private readonly IChatService _chatService;
 
-        public BooksController(IBookService bookService)
+        public BooksController(IBookService bookService, IChatService chatService)
         {
             _bookService = bookService;
+            _chatService = chatService;
         }
-        
+        [HttpGet("genres")]
         public async Task<IEnumerable<Genre>> GetBooKGenres()
         {
             return await _bookService.GetBookGenres();
@@ -28,17 +31,26 @@ namespace OpenLibraryServer.Web.Controllers
         [HttpGet("{bookId}")]
         public async Task<BookTO> GetById([FromRoute] string bookId)
         {
-            if (!Guid.TryParse(bookId, out Guid guid))
-            {
-                throw new InvalidFormatException($"String {bookId} is not a valid Guid");
-            }
-            return await _bookService.GetById(guid);
+            var bookGuid = EntityHelpers.TryParseGuid(bookId);
+            return await _bookService.GetById(bookGuid);
         }
-        [HttpGet]
-        public async Task<IEnumerable<BookTO>> GetByFilter([FromQuery] int count, [FromQuery] int offset, [FromQuery] BookFilter filter = null)
+        [HttpPost("filter")]
+        public async Task<FilterResponse> GetByFilter([FromBody] BookFilter filter)
         {
-            return await _bookService.GetByFilter(filter ?? new BookFilter(), count, offset);
+            return await _bookService.GetByFilter(filter);
         }
 
+        [HttpPost]
+        public async Task<BookTO> CreateBook([FromBody] CreateBookTO bookTo)
+        {
+            var chat = await _chatService.CreateChat(new ChatTO()
+            {
+                Name = $"{bookTo.Title} - Chat",
+                ImageURL = bookTo.ImageLink,
+                LastMessage = null
+            });
+            var book = await _bookService.AddBook(bookTo, chat.ChatId);
+            return book;
+        }
     }
 }

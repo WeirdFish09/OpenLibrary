@@ -1,5 +1,6 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,44 +19,17 @@ namespace OpenLibraryServer.Service
     public class UserAuthService : IUserAuthService
     {
         private readonly OpenLibraryServerDBContext _dbContext;
-        private readonly TokenConfig _tokenConfig;
-        private readonly SigningCredentials _signingCredentials;
-        private readonly JwtSecurityTokenHandler _tokenHandler;
+        private readonly TokenHelpers _tokenHelpers;
 
-        public UserAuthService(OpenLibraryServerDBContext dbContext, IOptions<TokenConfig> tokenConfig)
+        public UserAuthService(OpenLibraryServerDBContext dbContext, TokenHelpers tokenHelpers)
         {
             _dbContext = dbContext;
-            _tokenConfig = tokenConfig.Value;
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_tokenConfig.Secret));
-            _signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
-            _tokenHandler = new JwtSecurityTokenHandler();
-        }
-        
-        private string CreateJWT(User user)
-        {
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Name,user.UserId.ToString())
-            };
-
-            JwtSecurityToken token = new JwtSecurityToken(
-                issuer: _tokenConfig.Issuer,
-                audience: _tokenConfig.Audience,
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(_tokenConfig.JWTLifetime),
-                signingCredentials: _signingCredentials
-            );
-
-            return _tokenHandler.WriteToken(token);
-        }
-        private string GenerateRefreshToken()
-        {
-            return Guid.NewGuid().ToString();
+            _tokenHelpers = tokenHelpers;
         }
         private TokenTO CreateTokenTO(User user)
         {
-            var accessToken = CreateJWT(user);
-            var refreshTokenValue = GenerateRefreshToken();
+            var accessToken = _tokenHelpers.CreateJWT(user);
+            var refreshTokenValue = _tokenHelpers.GenerateRefreshToken();
             return new TokenTO() { AccessToken = accessToken, RefreshToken = refreshTokenValue };
         }
         
@@ -78,7 +52,7 @@ namespace OpenLibraryServer.Service
             {
                 RefreshToken = newToken.RefreshToken,
                 User = user,
-                DueDate = DateTime.Now.AddMinutes(_tokenConfig.RefreshTokenLifetime)
+                DueDate = DateTime.Now.AddMinutes(_tokenHelpers.GetTokenConfig().RefreshTokenLifetime)
             };
             await _dbContext.Tokens.AddAsync(dbToken);
             await _dbContext.SaveChangesAsync();
@@ -111,17 +85,17 @@ namespace OpenLibraryServer.Service
         {
             User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.UserName == loginTO.UserName);
             if(user == null)
-                throw new NotFoundException($"User with username {loginTO.UserName} not found");
+                throw new BadRequestException($"User with username {loginTO.UserName} not found");
 
             if(!PasswordHelpers.ValidatePassword(loginTO.Password, user.PasswordSalt, user.PasswordHash))
-                throw new Exception("Invalid password");
+                throw new BadRequestException("Invalid password");
 
             var tokenTO = CreateTokenTO(user);
             var dbToken = new Token()
             {
                 RefreshToken = tokenTO.RefreshToken,
                 User = user,
-                DueDate = DateTime.Now.AddMinutes(_tokenConfig.RefreshTokenLifetime)
+                DueDate = DateTime.Now.AddMinutes(_tokenHelpers.GetTokenConfig().RefreshTokenLifetime)
             };
             await _dbContext.Tokens.AddAsync(dbToken);
             await _dbContext.SaveChangesAsync();
@@ -144,6 +118,15 @@ namespace OpenLibraryServer.Service
                 PasswordHash = passwordHash
             };
             await _dbContext.Users.AddAsync(newUser);
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task ChangeUserPassword(ChangePasswordTO changePasswordTo, Guid userId)
+        {
+            var user = await _dbContext.Users.Where(u => u.UserId == userId).FirstAsync();
+            if(!PasswordHelpers.ValidatePassword(changePasswordTo.OldPassword, user.PasswordSalt, user.PasswordHash))
+                throw new BadRequestException("Invalid old password");
+            user.PasswordHash = PasswordHelpers.HashPassword(changePasswordTo.NewPassword, Encoding.UTF8.GetBytes(user.PasswordSalt));
             await _dbContext.SaveChangesAsync();
         }
     }

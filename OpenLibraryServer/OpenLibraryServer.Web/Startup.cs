@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
@@ -11,9 +13,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using OpenLibraryServer.DataAccess;
 using OpenLibraryServer.Models;
 using OpenLibraryServer.Service;
+using OpenLibraryServer.Service.HelperFunctions;
 using OpenLibraryServer.Service.Interfaces;
 using OpenLibraryServer.Web.Middleware;
 
@@ -40,14 +44,37 @@ namespace OpenLibraryServer.Web
             Configuration.GetSection("ConnectionString");
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<IUserAuthService, UserAuthService>();
+            services.AddTransient<IChatService, ChatService>();
+            services.AddSingleton<TokenHelpers>();
+            
+            var key = Encoding.UTF8.GetBytes(Configuration.GetSection("TokenConfig")["Secret"]);
+            services.AddAuthentication(x =>
+                {
+                    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key)
+                    };
+                });
+
             services.AddMvc();
-            services.AddCors();//options =>
-            // {
-            //     options.AddDefaultPolicy(builder => builder
-            //         //.WithOrigins("http://*")
-            //         .AllowAnyOrigin()
-            //         .AllowAnyHeader().AllowAnyMethod());
-            // });
+            services.AddSignalR();
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder => builder
+                    //.WithOrigins("http://*")
+                    .AllowAnyHeader().AllowAnyMethod());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +85,6 @@ namespace OpenLibraryServer.Web
                 app.UseDeveloperExceptionPage();
             }
             
-            app.UseHttpsRedirection();
             app.UseCors(options =>
             {
                 options.AllowAnyMethod()
@@ -67,12 +93,14 @@ namespace OpenLibraryServer.Web
                     .AllowCredentials(); // allow credentials
             });
             app.UseExceptionHandlingMiddleware();
-
+            app.UseAuthentication();
+            
             app.UseRouting();
-
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }

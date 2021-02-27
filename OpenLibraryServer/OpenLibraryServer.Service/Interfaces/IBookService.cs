@@ -11,8 +11,8 @@ namespace OpenLibraryServer.Service.Interfaces
     {
         Task<IEnumerable<Genre>> GetBookGenres();
         Task<BookTO> GetById(Guid guid);
-        Task<IEnumerable<BookTO>> GetByFilter(BookFilter filter, int count, int offset);
-        Task<BookTO> AddBook(BookTO bookTo);
+        Task<FilterResponse> GetByFilter(BookFilter filter);
+        Task<BookTO> AddBook(CreateBookTO bookTo, Guid chatId);
         Task ChangeBookStatus(Guid bookId, string status);
     }
 }

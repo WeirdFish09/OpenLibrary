@@ -15,7 +15,9 @@ namespace OpenLibraryServer.Models
         public string PictureURL { get; set; }
         public string FileURL { get; set; }
         public string Status { get; set; }
+        public Guid ChatId { get; set; }
         
-        public ICollection<Genre> Genres { get; set; }
+        public Chat Chat { get; set; }
+        public ICollection<BookGenres> BookGenres { get; set; }
     }
 }

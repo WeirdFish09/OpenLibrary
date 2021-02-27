@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OpenLibraryServer.DataAccess;
@@ -9,9 +10,10 @@ using OpenLibraryServer.DataAccess;
 namespace OpenLibraryServer.DataAccess.Migrations
 {
     [DbContext(typeof(OpenLibraryServerDBContext))]
-    partial class OpenLibraryServerDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210221213534_userChats")]
+    partial class userChats
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,7 +30,7 @@ namespace OpenLibraryServer.DataAccess.Migrations
                     b.Property<string>("Author")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("ChatId")
+                    b.Property<Guid?>("ChatId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Description")
@@ -51,27 +53,6 @@ namespace OpenLibraryServer.DataAccess.Migrations
                     b.HasIndex("ChatId");
 
                     b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("OpenLibraryServer.Models.BookGenres", b =>
-                {
-                    b.Property<Guid>("BookGenreId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BookId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("GenreId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("BookGenreId");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("GenreId");
-
-                    b.ToTable("BookGenres");
                 });
 
             modelBuilder.Entity("OpenLibraryServer.Models.Chat", b =>
@@ -108,8 +89,7 @@ namespace OpenLibraryServer.DataAccess.Migrations
 
                     b.HasKey("ChatMessageId");
 
-                    b.HasIndex("ChatId")
-                        .IsUnique();
+                    b.HasIndex("ChatId");
 
                     b.HasIndex("UserId");
 
@@ -123,10 +103,15 @@ namespace OpenLibraryServer.DataAccess.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<Guid?>("BookId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("GenreName")
                         .HasColumnType("text");
 
                     b.HasKey("GenreId");
+
+                    b.HasIndex("BookId");
 
                     b.ToTable("Genres");
                 });
@@ -201,37 +186,16 @@ namespace OpenLibraryServer.DataAccess.Migrations
                 {
                     b.HasOne("OpenLibraryServer.Models.Chat", "Chat")
                         .WithMany()
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ChatId");
 
                     b.Navigation("Chat");
-                });
-
-            modelBuilder.Entity("OpenLibraryServer.Models.BookGenres", b =>
-                {
-                    b.HasOne("OpenLibraryServer.Models.Book", "Book")
-                        .WithMany("BookGenres")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OpenLibraryServer.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("OpenLibraryServer.Models.ChatMessage", b =>
                 {
                     b.HasOne("OpenLibraryServer.Models.Chat", "Chat")
-                        .WithOne("LastMessage")
-                        .HasForeignKey("OpenLibraryServer.Models.ChatMessage", "ChatId")
+                        .WithMany()
+                        .HasForeignKey("ChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -244,6 +208,13 @@ namespace OpenLibraryServer.DataAccess.Migrations
                     b.Navigation("Chat");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("OpenLibraryServer.Models.Genre", b =>
+                {
+                    b.HasOne("OpenLibraryServer.Models.Book", null)
+                        .WithMany("Genres")
+                        .HasForeignKey("BookId");
                 });
 
             modelBuilder.Entity("OpenLibraryServer.Models.Token", b =>
@@ -276,12 +247,7 @@ namespace OpenLibraryServer.DataAccess.Migrations
 
             modelBuilder.Entity("OpenLibraryServer.Models.Book", b =>
                 {
-                    b.Navigation("BookGenres");
-                });
-
-            modelBuilder.Entity("OpenLibraryServer.Models.Chat", b =>
-                {
-                    b.Navigation("LastMessage");
+                    b.Navigation("Genres");
                 });
 
             modelBuilder.Entity("OpenLibraryServer.Models.User", b =>

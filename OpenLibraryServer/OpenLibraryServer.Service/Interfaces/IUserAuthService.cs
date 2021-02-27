@@ -9,5 +9,6 @@ namespace OpenLibraryServer.Service.Interfaces
         Task<UserTO> GetUserById(Guid userId);
         Task<TokenTO> Login(LoginTO loginTO);
         Task Register(RegisterTO registerTo);
+        Task ChangeUserPassword(ChangePasswordTO changePasswordTo, Guid userId);
     }
 }
