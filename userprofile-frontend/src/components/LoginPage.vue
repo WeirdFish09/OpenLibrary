@@ -35,9 +35,6 @@ export default Vue.extend({
     userName: '',
     password: ''
   }),
-  // data: {
-  //   current: ''
-  // },
   methods: {
     login() {
       userService.login(this.userName, this.password);

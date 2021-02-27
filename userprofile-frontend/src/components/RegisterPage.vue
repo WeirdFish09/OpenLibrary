@@ -40,9 +40,6 @@ export default Vue.extend({
     password: '',
     confirmPassword: ''
   }),
-  // data: {
-  //   current: ''
-  // },
   methods: {
     register() {
       if (this.password != this.confirmPassword) {
