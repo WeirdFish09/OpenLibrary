@@ -30,7 +30,7 @@ namespace OpenLibraryServer.Service
             return chat.Entity;
         }
 
-        public async Task<ChatMessage> AddMessage(string message, Guid userId, Guid chatId)
+        public async Task<MessageTO> AddMessage(string message, Guid userId, Guid chatId)
         {
             var chat = await _context.Chats.FirstOrDefaultAsync(c => c.ChatId == chatId);
             var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
@@ -47,24 +47,37 @@ namespace OpenLibraryServer.Service
             });
             await _context.SaveChangesAsync();
             var entity = newMessage.Entity;
-            chat.LastMessage = entity;
+            chat.ChatMessage = entity;
             _context.Update(chat);
             await _context.SaveChangesAsync();
-            return newMessage.Entity;
+            return ConvertToTO(entity, user.UserName);
         }
 
-        public async Task<ICollection<ChatMessage>> GetMessagesByChat(Guid chatId)
+        private static MessageTO ConvertToTO(ChatMessage message, string userName)
         {
-            return await _context.ChatMessages.Where(cm => cm.ChatId == chatId)
+            return new MessageTO()
+            {
+                Message = message.Message,
+                Username = userName,
+                DateTime = message.DateTime,
+                UserId = message.UserId
+            };            
+        }
+
+        public async Task<ICollection<MessageTO>> GetMessagesByChat(Guid chatId)
+        {
+            var dbMessages = await _context.ChatMessages.Where(cm => cm.ChatId == chatId)
                 .Include(cm => cm.Chat).Include(cm => cm.User)
                 .OrderBy(cm => cm.DateTime).Take(100).ToListAsync();
+            return dbMessages.Select(m => ConvertToTO(m, m.User.UserName)).ToList();
         }
 
         public async Task<IEnumerable<ChatTO>> GetChatsByUser(Guid userId)
         {
             var chats = await _context.UserChats.Where(uc => uc.UserId == userId)
                 .Include(uc => uc.Chat)
-                .ThenInclude(c=> c.LastMessage)
+                    .ThenInclude(c=> c.ChatMessage)
+                        .ThenInclude(cm => cm.User)
                 .Select(uc => uc.Chat).ToListAsync();
             var chatIds = chats.Select(c => c.ChatId);
             var books = await _context.Books.Where(b => chatIds.Contains(b.ChatId))
@@ -78,7 +91,7 @@ namespace OpenLibraryServer.Service
             {
                 ChatId = c.ChatId,
                 Name = c.Name,
-                LastMessage = c.LastMessage,
+                LastMessage = ConvertMessageToTO(c.ChatMessage),
                 ImageURL = booksDictionary[c.ChatId].PictureURL
             }).ToList();
         }
@@ -100,6 +113,36 @@ namespace OpenLibraryServer.Service
             EntityHelpers.CheckEntityExists(entity, $"No userChat for userId: {userId} and chatId: {chatId}");
             _context.UserChats.Remove(entity);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<ChatTO> GetById(Guid chatId)
+        {
+            var book = await _context.Books.
+                Where(b => b.ChatId == chatId)
+                .Include(b => b.Chat)
+                    .ThenInclude(c => c.ChatMessage)
+                        .ThenInclude(cm => cm.User)
+                .FirstOrDefaultAsync(c => c.ChatId == chatId);
+            EntityHelpers.CheckEntityExists(book, $"No book for chatId: {chatId}");
+            return new ChatTO()
+            {
+                Name = book.Chat.Name,
+                ChatId = chatId,
+                LastMessage = ConvertMessageToTO(book.Chat.ChatMessage),
+                ImageURL = book.PictureURL
+            };
+
+        }
+
+        private MessageTO ConvertMessageToTO(ChatMessage message)
+        {
+            return new MessageTO()
+            {
+                Message = message.Message,
+                Username = message.User.UserName,
+                DateTime = message.DateTime,
+                UserId = message.UserId
+            };
         }
     }
 }

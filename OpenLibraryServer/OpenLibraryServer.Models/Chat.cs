@@ -8,6 +8,8 @@ namespace OpenLibraryServer.Models
         [Key]
         public Guid ChatId { get; set; }
         public string Name { get; set; }
-        public ChatMessage LastMessage { get; set; }
+        public Guid ChatMessageId { get; set; }
+        
+        public ChatMessage ChatMessage { get; set; }
     }
 }

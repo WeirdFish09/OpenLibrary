@@ -1,10 +1,15 @@
 using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using OpenLibraryServer.Models;
+using OpenLibraryServer.Service.HelperFunctions;
 using OpenLibraryServer.Service.Interfaces;
 
 namespace OpenLibraryServer.Service
 {
+    [Authorize]
     public class ChatHub : Hub
     {
         private readonly IChatService _chatService;
@@ -26,10 +31,17 @@ namespace OpenLibraryServer.Service
             return Groups.RemoveFromGroupAsync(Context.ConnectionId, chatId.ToString());
         }
         
-        public async Task SendMessage(Guid userId, Guid chatId, string message)
+        public async Task SendMessage(SendMessageRequest request)
         {
-            var messageTO = _chatService.AddMessage(message, userId, chatId);
-            await Clients.Group(chatId.ToString()).SendAsync("ReceiveMessage", await messageTO);
+            var userId = TokenHelpers.GetUserId(Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value); 
+            var messageTO = _chatService.AddMessage(request.Message, userId, request.ChatId);
+            await Clients.Group(request.ChatId.ToString()).SendAsync("ReceiveMessage", await messageTO);
+        }
+        
+        public class SendMessageRequest
+        {
+            public Guid ChatId { get; set; }
+            public string Message { get; set; }
         }
     }
 }

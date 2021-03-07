@@ -1,0 +1,25 @@
+.chatsPage {
+    padding: 30px 5%;
+    background: #1e1e1e;
+    height: calc(100vh - 155px);
+}
+
+.chatsContainer {
+    display: flex;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    height: 100%;
+
+    .chatlistContainer {
+        width: 30%;
+        height: calc(100% - 10px);
+        padding: 5px;
+        border-right: 1px solid #cccccc;
+    }
+
+    .chatContainer {
+        height: 100%;
+        width: 70%;
+        padding: 0 5px 0 5px;
+    }
+}

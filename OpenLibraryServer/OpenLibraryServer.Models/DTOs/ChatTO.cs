@@ -7,6 +7,6 @@ namespace OpenLibraryServer.Models.DTOs
         public Guid ChatId { get; set; }
         public string Name { get; set; }
         public string ImageURL { get; set; }
-        public ChatMessage LastMessage { get; set; }
+        public MessageTO LastMessage { get; set; }
     }
 }

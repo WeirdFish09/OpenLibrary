@@ -22,6 +22,13 @@ namespace OpenLibraryServer.Web.Controllers
             _chatService = chatService;
         }
         
+        [HttpGet("{chatId}")]
+        public async Task<ChatTO> GetById([FromQuery] string chatId)
+        {
+            var guid = EntityHelpers.TryParseGuid(chatId);
+            return await _chatService.GetById(guid);
+        }
+        
         [HttpGet]
         public async Task<IEnumerable<ChatTO>> GetUserChats()
         {
