@@ -3,9 +3,9 @@ import { Chat } from '../../Models/Chat';
 import { loadSelectedChat } from '../../Redux/ActionCreators/ActiveChatActionCreator';
 import { ActiveChatReducer } from '../../Redux/Reducers/ActiveChatReducer';
 import { State } from '../../Redux/State';
-import './ChatListComponent.css';
 import {connect} from 'react-redux';
 import socketService from '../../Services/SocketService';
+import styles from './ChatListComponent.module.scss';
 
 type ChatListProp = {
     chats: Chat[];
@@ -13,9 +13,11 @@ type ChatListProp = {
     setActiveChat: any;
 }
 class ChatListComponent extends React.Component<ChatListProp>{
+
     constructor(props: ChatListProp){
         super(props);
     }
+
     chatViews: any;
     private handleSelectChat(id: string): void{
         socketService.joinChat(id);
@@ -26,16 +28,16 @@ class ChatListComponent extends React.Component<ChatListProp>{
             console.log(chat);
             const lastMessage = chat.lastMessage ? chat.lastMessage.username + ": " + chat.lastMessage.message
                 : null;
-            return(
-            <div key={chat.chatId} className={chat === this.props.activeChat ? "chat-element-own":"chat-element"} onClick={() => this.handleSelectChat(chat.chatId)}>
-                <div className="chat-img-container">
-                    <img src={chat.imageURL} className="chat-img"></img>
+            return (
+            <div key={chat.chatId} className={chat === this.props.activeChat ? styles.chatElementOwn : styles.chatElement } onClick={() => this.handleSelectChat(chat.chatId)}>
+                <div className={styles.chatImgContainer}>
+                    <img src={chat.imageURL} className={styles.chatImg}></img>
                 </div>
-                <div className="chat-text-container">
-                    <div className="chat-title-container">
+                <div className={styles.chatTextContainer}>
+                    <div className={styles.chatTitleContainer}>
                         {chat.name}
                     </div>
-                    <div className="chat-lastmessage-container">
+                    <div className={styles.chatLastmessageContainer}>
                         {lastMessage ?? "<i>No messages yet...</i>"}
                     </div>
                 </div>
@@ -46,13 +48,19 @@ class ChatListComponent extends React.Component<ChatListProp>{
 
     render(){
         let chatZone;
+
         if(this.props.chats.length){
             chatZone = this.mapChats();
         } else {
-            chatZone = "You aren't a part of any chats yet.";
+            chatZone = (
+                <div className={styles.noChats}>
+                    <p>You aren't a part of any chats yet.</p>
+                </div>
+            );
         }
+
         return(
-            <div className="chats-container">
+            <div className={styles.chatsContainer}>
                 {chatZone}
             </div>
         )  

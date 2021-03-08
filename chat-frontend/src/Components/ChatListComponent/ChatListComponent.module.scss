@@ -1,0 +1,69 @@
+.chatElementOwn{
+    border-top: 2px solid #160f3c;
+    border-bottom: 2px solid #160f3c;
+    display: flex;
+    height: 6em;
+    background-color: crimson;
+}
+
+
+.chatImg{
+    object-fit: contain;
+    height: 100%;
+    width: auto;
+}
+
+
+.chatsContainer {
+    height: 100%;
+    background-color: #494949;
+    padding: 10px 0;
+}
+
+.noChats {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #cccccc;
+}
+
+.chatElement{
+    display: flex;
+    height: 6em;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    cursor: pointer;
+    
+    .chatImgContainer{
+        height: 100%;
+        width: fit-content;
+        margin-right: 10px;
+    }
+
+    .chatTextContainer{
+        width: 100%;
+        padding: 20px 5px;
+    }
+    
+    .chatTitleContainer{
+        height: fit-content;
+        width: 260px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #cccccc;
+        font-weight: 500;
+    }
+
+    .chatLastmessageContainer {
+        color: #a3a3a3;
+    }
+}
+
+.chatElement:not(:last-child) {
+    border-bottom: 1px solid #646464;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+}

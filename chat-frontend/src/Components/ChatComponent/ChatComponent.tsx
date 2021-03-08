@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
-import React, { Component, SyntheticEvent, useState } from "react";
+import React, { useState } from "react";
 import { Chat } from "../../Models/Chat";
 import { Message } from "../../Models/Message";
 import { loadNewMessage } from "../../Redux/ActionCreators/MessagesActionCreator";
 import { State } from "../../Redux/State";
-import "./ChatComponent.scss";
+import styles from "./ChatComponent.module.scss";
 import socketService from "../../Services/SocketService";
-import { sendMessage } from "@microsoft/signalr/dist/esm/Utils";
+import noData from '../../images/noData.png';
 
 type ChatComponentProps = {
     activeChat: Chat;
@@ -24,10 +24,10 @@ const ChatComponent = (props: ChatComponentProps) => {
     }
 
     const messageViews = props.messages.map(message => {
-        const msgClassName = message.userId === userId ? "message-own" : "message-foreign";
+        const msgClassName = message.userId === userId ? styles.messageOwn : styles.messageForeign;
         return (
-            <div className="message-container">
-                <div className={`message ${msgClassName}`}>
+            <div className={styles.messageContainer}>
+                <div className={`${styles.message} ${msgClassName}`}>
                     {message.username}:    {message.message}
                 </div>
                 <div>
@@ -36,23 +36,34 @@ const ChatComponent = (props: ChatComponentProps) => {
             </div>
         )
     });
-
+    console.log(props.activeChat);
     return (
-        <div id="chat-container">
-            <div id="title">
-                <span>
-                    Title
-                    </span>
-            </div>
-            <div id="messages-container">
-                {messageViews}
-            </div>
-            {props.activeChat.chatId !== "" ? (
-                <div id="input-container">
-                    <input id="message-input" value={message} onChange={onMessageChange} />
-                    <button id="send-message-btn" onClick={handleSend}>Send</button>
+        <div className={styles.chatContainer}>
+            {props.activeChat.chatId == "" ? (
+                <div className={styles.noData}>
+                    <img src={noData} />
+                    <p>
+                        No chat selected... 
+                    </p>
                 </div>
-            ) : ""}
+            ) : (
+                <>
+                    <div className={styles.title}>
+                        <span>
+                            {props.activeChat.name}
+                        </span>
+                    </div>
+                    <div id="messages-container">
+                        {messageViews}
+                    </div>
+                    {props.activeChat.chatId !== "" ? (
+                        <div id="input-container">
+                            <input id="message-input" value={message} onChange={onMessageChange} />
+                            <button id="send-message-btn" onClick={handleSend}>Send</button>
+                        </div>
+                    ) : ""}
+                </>
+            )} 
         </div>
     )
 }
