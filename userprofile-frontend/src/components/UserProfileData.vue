@@ -81,15 +81,9 @@ export default Vue.extend({
     },
     imageUrl: ''
   }),
-  // data: {
-  //   current: ''
-  // },
   methods: {
     getImageUrl() {
       return "";
-    },
-    onChange(event: any) {
-      console.log(event.target.value)
     },
     changePassword(event: any) {
       console.log(event, this.changePasswordModel.currentPassword);
@@ -141,128 +135,130 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.container {
-  background: #1e1e1e;
-  height: calc(100vh - 75px);
-  padding-top: 10px;
-  text-align: left;
-  
-  .user-profile {
-    max-width: 820px;
-    min-width: 320px;
-    margin: 0 auto;
-    padding: 10px;
-    background: #303030;
-    border-radius: 10px;
-    min-height: 200px;
+  @import '../styles/variables.scss';
 
-    .top {
-      margin: 20px;
-      display: flex;
-      .usr-image {
-        height: 300px;
-        width: 300px;
-        border-radius: 50%;
-        background: #414141;
-      }
+  .container {
+    background: $pageBackground;
+    height: calc(100vh - 75px);
+    padding-top: 10px;
+    text-align: left;
+    
+    .user-profile {
+      max-width: 820px;
+      min-width: 320px;
+      margin: 0 auto;
+      padding: 10px;
+      background: $formsBackground;
+      border-radius: 10px;
+      min-height: 200px;
 
-      .user {
-        margin-left: 30px;
-
-        .user-name {
-          color: #cccccc;
-          font-size: 36px;
-        }
-
-        .theme-name {
-          color: #cccccc;
-          margin: 20px 0 5px 0;
-          font-size: 16px;
-        }
-
-        select {
-          background: #414141;
-          border: 1px solid #494949;
-          color: #cccccc;
+      .top {
+        margin: 20px;
+        display: flex;
+        .usr-image {
+          height: 300px;
           width: 300px;
-          padding: 5px;
-          border-radius: 3px;
+          border-radius: 50%;
+          background: $selectBackground;
         }
 
-        .change-password {
-          color: #cccccc;
-          text-decoration: underline;
-          font-size: 12px;
-          cursor: pointer;
-          margin-top: 20px;
+        .user {
+          margin-left: 30px;
 
-          &:hover {
-            text-decoration: none;
-            color: white;
+          .user-name {
+            color: $textColor;
+            font-size: 36px;
+          }
+
+          .theme-name {
+            color: $textColor;
+            margin: 20px 0 5px 0;
+            font-size: 16px;
+          }
+
+          select {
+            background: $selectBackground;
+            border: 1px solid $accentBackground;
+            color: $textColor;
+            width: 300px;
+            padding: 5px;
+            border-radius: 3px;
+          }
+
+          .change-password {
+            color: $textColor;
+            text-decoration: underline;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 20px;
+
+            &:hover {
+              text-decoration: none;
+              color: $accentTextColor;
+            }
           }
         }
       }
-    }
 
-    .bottom {
-      margin: 20px 0;
-      display: flex;
-      justify-content: center;
+      .bottom {
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
 
-      .change-password-form {
-        background: #141414;
-        border-radius: 5px;
-        border: 1px solid #494949;
-        padding: 20px;
-        width: 400px;
+        .change-password-form {
+          background: $buttonHoverBackground;
+          border-radius: 5px;
+          border: 1px solid $accentBackground;
+          padding: 20px;
+          width: 400px;
 
-        .form-name {
-          font-size: 24px;
-          margin-bottom: 15px;
-          text-align: center;
-          color: #cccccc;
-        }
-
-        .form-field {
-          margin: 10px;
-
-          label {
-            display: block;
-            font-size: 12px;
-            color: #f5f5f5;
+          .form-name {
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: $textColor;
           }
-          input {
-            outline: none;
-            background: none;
-            border: none;
-            color: white;
-            border-bottom: 1px solid #494949;
-            width: 100%;
-            padding: 3px;
+
+          .form-field {
+            margin: 10px;
+
+            label {
+              display: block;
+              font-size: 12px;
+              color: $mainTextColor;
+            }
+            input {
+              outline: none;
+              background: none;
+              border: none;
+              color: $accentTextColor;
+              border-bottom: 1px solid $accentBackground;
+              width: 100%;
+              padding: 3px;
+            }
           }
-        }
 
-        .confirm-button {
-          display: flex;
-          justify-content: space-between;
-          margin: 20px 10px 0 10px;
+          .confirm-button {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 10px 0 10px;
 
-          button {
-            width: 150px;
-            background: #646464;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 16px;
-            &:hover {
-              color: #141414;
-              background: #cccccc;
+            button {
+              width: 150px;
+              background: $buttonBackground;
+              border: none;
+              cursor: pointer;
+              padding: 10px;
+              border-radius: 5px;
+              font-size: 16px;
+              &:hover {
+                color: $buttonHoverBackground;
+                background: $textColor;
+              }
             }
           }
         }
       }
     }
   }
-}
 </style>

@@ -8,18 +8,14 @@
             </div>
             
             <div class="menu">
-                <div class="menu-item active">Library</div>
-                <div class="menu-item">Chat</div>
+                <div class="menu-item" @click="toLibrary()">Library</div>
+                <div class="menu-item" @click="toChat()">Chat</div>
             </div>
         </div>
 
-        <div class="user-data">
+        <div class="user-data active">
+            <p>Profile</p>
             <img src="@/assets/userLogo.png" width="40px" height="40px" @click="logout()">
-            
-            <!--<mat-menu #menu="matMenu" >
-                <button mat-menu-item class="user-menu">Settings</button>
-                <button mat-menu-item>Logout</button>
-            </mat-menu>-->
         </div>
     </div> 
 </template>
@@ -36,17 +32,25 @@ export default Vue.extend({
     methods: {
         logout() {
             userService.logout();
+        },
+        toLibrary() {
+            window.location.pathname = '/';
+        },
+        toChat() {
+            window.location.pathname = '/chat';
         }
     }
 })
 </script>
 
 <style template lang="scss">
+    @import '../styles/variables.scss';
+
     .header {
         display: flex;
         justify-content: space-between;
         padding: 10px 3%;
-        background: #2d2d2d;
+        background: $blocksBackground;
         height: 75px;
     }
 
@@ -58,7 +62,7 @@ export default Vue.extend({
             margin: 0 30px;
             cursor: pointer;
             border-radius: 30px;
-            background: #494949;
+            background: $accentBackground;
             img {
                 width: 50px;
                 height: 50px;
@@ -77,15 +81,15 @@ export default Vue.extend({
             text-align: center;
             padding: 5px;
             cursor: pointer;
-            color: #cccccc;
+            color: $textColor;
             &.active {
-                color: #ffffff;
-                background-color: #494949;
+                color: $accentTextColor;
+                background-color: $accentBackground;
             }
 
             &:not(.active):hover {
-                background-color: #606060;
-                color: white;
+                background-color: $accentHover;
+                color: $textColor;
             }
         }
     }
@@ -95,11 +99,22 @@ export default Vue.extend({
         align-items: center;
         img {
             cursor: pointer;
-            background-color: #494949;
+            background-color: $accentBackground;
             border-radius: 25px;
 
             &:hover {
-                background-color: #606060;
+                background-color: $accentHover;
+            }
+        }
+        p {
+            color: $textColor;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-right: 10px;
+            font-size: 12px;
+
+            &:hover {
+                text-decoration: none;
             }
         }
     }

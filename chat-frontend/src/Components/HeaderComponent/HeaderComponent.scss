@@ -1,8 +1,10 @@
+@import '../../styles/variables.scss';
+
 .header {
     display: flex;
     justify-content: space-between;
     padding: 10px 3%;
-    background: #2d2d2d;
+    background: $blocksBackground;
     height: 75px;
 }
 
@@ -14,7 +16,7 @@
         margin: 0 30px;
         cursor: pointer;
         border-radius: 30px;
-        background: #494949;
+        background: $accentBackground;
         img {
             width: 50px;
             height: 50px;
@@ -33,15 +35,15 @@
         text-align: center;
         padding: 5px;
         cursor: pointer;
-        color: #cccccc;
+        color: $textColor;
         &.active {
-            color: #ffffff;
-            background-color: #494949;
+            color: $accentTextColor;
+            background-color: $accentBackground;
         }
 
         &:not(.active):hover {
-            background-color: #606060;
-            color: white;
+            background-color: $accentHover;
+            color: $accentTextColor;
         }
     }
 }
@@ -51,11 +53,22 @@
     align-items: center;
     img {
         cursor: pointer;
-        background-color: #494949;
+        background-color: $accentBackground;
         border-radius: 25px;
 
         &:hover {
-            background-color: #606060;
+            background-color: $accentHover;
+        }
+    }
+    p {
+        color: $textColor;
+        text-decoration: underline;
+        cursor: pointer;
+        margin-right: 10px;
+        font-size: 12px;
+
+        &:hover {
+            text-decoration: none;
         }
     }
 }

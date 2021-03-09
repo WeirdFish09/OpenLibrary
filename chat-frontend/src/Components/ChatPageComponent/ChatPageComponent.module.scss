@@ -1,19 +1,21 @@
+@import '../../styles/variables.scss';
+
 .chatsPage {
     padding: 30px 5%;
-    background: #1e1e1e;
+    background: $pageBackground;
     height: calc(100vh - 75px);
 }
 
 .chatsContainer {
     display: flex;
-    border: 1px solid #cccccc;
+    border: 1px solid $textColor;
     border-radius: 5px;
     height: 100%;
 
     .chatlistContainer {
         width: 350px;
         height: 100%;
-        border-right: 1px solid #cccccc;
+        border-right: 1px solid $textColor;
     }
 
     .chatContainer {

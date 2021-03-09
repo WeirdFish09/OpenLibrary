@@ -21,7 +21,7 @@ const routes: Array<RouteConfig> = [
     }
   },
   {
-    path: '/',
+    path: '/login',
     name: 'Login',
     component: Login,
     beforeEnter: (to, from, next) => {

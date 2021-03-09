@@ -14,6 +14,10 @@ const HeaderComponent = (props: HeaderProps) => {
         props.configureSocket();
     })
 
+    const toUserProfile = () => {
+        window.location.pathname = '/user-profile';
+    };
+
     return (
         <div className="header">
             <div className="left-part">
@@ -24,12 +28,13 @@ const HeaderComponent = (props: HeaderProps) => {
                 </div>
 
                 <div className="menu">
-                    <div className="menu-item active">Library</div>
-                    <div className="menu-item">Chat</div>
+                    <div className="menu-item "><a href="/">Library</a></div>
+                    <div className="menu-item active">Chat</div>
                 </div>
             </div>
 
             <div className="user-data">
+                <p onClick={() => toUserProfile()}>Profile</p>
                 <img src={userLogo} width="40px" height="40px"></img>
             </div>
         </div>

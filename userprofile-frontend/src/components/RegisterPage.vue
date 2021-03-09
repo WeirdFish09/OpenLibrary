@@ -57,83 +57,85 @@ export default Vue.extend({
 </script>
 
 <style scoped lang="scss">
-.container {
-  background: #1e1e1e;
-  height: calc(100vh);
-  padding-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: left;
-  background: url('../assets/background.jpg') center center;
-  background-size: 100% 100%;
+  @import '../styles/variables.scss';
 
-  .register-form {
-    background: rgba(#303030, 0.98);
-    color: #cccccc;
-    border-radius: 3px;
-    border: 1px solid #494949;
-    padding: 20px;
-    width: 400px;
-  }
-
-  .form-name {
-    font-size: 24px;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-
-  .inputs {
-    label {
-      display: block;
-      font-size: 12px;
-      color: #f5f5f5;
-    }
-    input {
-      outline: none;
-      background: none;
-      border: none;
-      color: white;
-      border-bottom: 1px solid #494949;
-      width: 100%;
-      padding: 3px;
-    }
-    > div {
-      margin: 10px;
-    }
-  }
-
-  .confirm-button {
+  .container {
+    background: $pageBackground;
+    height: calc(100vh);
+    padding-top: 10px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin: 30px 10px 0 10px;
+    justify-content: center;
+    text-align: left;
+    background: url('../assets/background.jpg') center center;
+    background-size: 100% 100%;
 
-    .toLogin {
-      color: #cccccc;
-      text-decoration: underline;
-      font-size: 12px;
-      cursor: pointer;
+    .register-form {
+      background: rgba($formsBackground, 0.98);
+      color: $textColor;
+      border-radius: 3px;
+      border: 1px solid $accentBackground;
+      padding: 20px;
+      width: 400px;
+    }
 
-      &:hover {
-        text-decoration: none;
-        color: white;
+    .form-name {
+      font-size: 24px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .inputs {
+      label {
+        display: block;
+        font-size: 12px;
+        color: $mainTextColor;
+      }
+      input {
+        outline: none;
+        background: none;
+        border: none;
+        color: $accentTextColor;
+        border-bottom: 1px solid $accentBackground;
+        width: 100%;
+        padding: 3px;
+      }
+      > div {
+        margin: 10px;
       }
     }
 
-    button {
-      width: 150px;
-      background: #646464;
-      border: none;
-      cursor: pointer;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 16px;
-      &:hover {
-        color: #141414;
-        background: #cccccc;
+    .confirm-button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 30px 10px 0 10px;
+
+      .toLogin {
+        color: $textColor;
+        text-decoration: underline;
+        font-size: 12px;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: none;
+          color: $accentTextColor
+        }
+      }
+
+      button {
+        width: 150px;
+        background: $buttonBackground;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        &:hover {
+          color: $buttonHoverBackground;
+          background: $textColor;
+        }
       }
     }
   }
-}
 </style>
