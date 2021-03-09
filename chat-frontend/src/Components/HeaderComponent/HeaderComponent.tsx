@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import React, { useEffect } from 'react';
 import logo from '../../images/logo.png';
+import userLogo from '../../images/userLogo.png';
 import { store } from '../../Redux/Store';
 import socketService from '../../Services/SocketService';
 import './HeaderComponent.scss';
@@ -29,7 +30,7 @@ const HeaderComponent = (props: HeaderProps) => {
             </div>
 
             <div className="user-data">
-                <img src="{{ userLogoLink }}" width="40px" height="40px"></img>
+                <img src={userLogo} width="40px" height="40px"></img>
             </div>
         </div>
     )
