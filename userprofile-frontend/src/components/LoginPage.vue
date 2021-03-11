@@ -42,6 +42,9 @@ export default Vue.extend({
     toRegister() {
       this.$router.push({ name: 'Register' });
     }
+  },
+  mounted: () => {
+    document.title = 'Login | Library';
   }
 });
 </script>
@@ -50,7 +53,7 @@ export default Vue.extend({
   @import '../styles/variables.scss';
   
   .container {
-    background: $pageBackground;
+    background: var(--pageBackground);
     height: calc(100vh);
     padding-top: 10px;
     display: flex;
@@ -61,10 +64,11 @@ export default Vue.extend({
     background-size: 100% 100%;
 
     .login-form {
-      background: rgba($formsBackground, 0.98);
-      color: $textColor;
+      opacity: 0.98;
+      background: var(--formsBackground);
+      color: var(--textColor);
       border-radius: 3px;
-      border: 1px solid $accentBackground;
+      border: 1px solid var(--accentBackground);
       padding: 20px;
       width: 400px;
     }
@@ -79,14 +83,14 @@ export default Vue.extend({
       label {
         display: block;
         font-size: 12px;
-        color: $mainTextColor;
+        color: var(--mainTextColor);
       }
       input {
         outline: none;
         background: none;
         border: none;
-        color: $accentTextColor;
-        border-bottom: 1px solid $accentBackground;
+        color: var(--accentTextColor);
+        border-bottom: 1px solid var(--accentBackground);
         width: 100%;
         padding: 3px;
       }
@@ -102,28 +106,28 @@ export default Vue.extend({
       margin: 30px 10px 0 10px;
 
       .register {
-        color: $textColor;
+        color: var(--textColor);
         text-decoration: underline;
         font-size: 12px;
         cursor: pointer;
 
         &:hover {
           text-decoration: none;
-          color: $accentTextColor;
+          color: var(--accentTextColor);
         }
       }
 
       button {
         width: 150px;
-        background: $buttonBackground;
+        background: var(--buttonBackground);
         border: none;
         cursor: pointer;
         padding: 10px;
         border-radius: 5px;
         font-size: 16px;
         &:hover {
-          color: $buttonHoverBackground;
-          background: $textColor;
+          color: var(--buttonHoverBackground);
+          background: var(--textColor);
         }
       }
     }

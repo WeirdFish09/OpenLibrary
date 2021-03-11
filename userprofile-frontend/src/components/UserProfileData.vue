@@ -15,7 +15,7 @@
           <div class="theme-name">
             Theme
           </div>
-          <select name="theme" id="theme-select" @change="onChange($event)">
+          <select name="theme" id="theme-select" v-model="theme" @change="onThemeChange()">
               <option value="dark">Dark</option>
               <option value="light">Light</option>
           </select>
@@ -64,6 +64,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import userService from '@/services/userService';
+import themeService, { Theme } from '@/services/themeService';
 
 export default Vue.extend({
   name: 'UserProfileData',
@@ -71,7 +72,7 @@ export default Vue.extend({
     msg: String,
   },
   data: () => ({ 
-    name: 'User name',
+    name: '',
     theme: '',
     changePasswordFormOpened: false,
     changePasswordModel: {
@@ -119,17 +120,28 @@ export default Vue.extend({
         newPassword: '',
         confirmPassword: ''
       };
+    },
+    onThemeChange() {
+      userService.changeTheme(this.$data.theme)
+        .then(_ => {
+          themeService.setThemeFromString(this.$data.theme);
+        });
     }
   },
   mounted () {
+    this.theme = themeService.getTheme();
+
     userService.getCurrentUser()
       .then(response => {
         this.name = response.data.userName;
-        this.theme = response.data.uiTheme;
+
+        const theme = response.data.uiTheme;
+        themeService.setThemeFromString(theme);
       }, error => {
           const errorData = error.response.data; 
           console.log(errorData);
       });
+    document.title = 'Profile | Library';
   }
 });
 </script>
@@ -138,7 +150,7 @@ export default Vue.extend({
   @import '../styles/variables.scss';
 
   .container {
-    background: $pageBackground;
+    background: var(--pageBackground);
     height: calc(100vh - 75px);
     padding-top: 10px;
     text-align: left;
@@ -148,7 +160,8 @@ export default Vue.extend({
       min-width: 320px;
       margin: 0 auto;
       padding: 10px;
-      background: $formsBackground;
+      background: var(--formsBackground);
+      border: 1px solid var(--formsBorder);
       border-radius: 10px;
       min-height: 200px;
 
@@ -159,34 +172,34 @@ export default Vue.extend({
           height: 300px;
           width: 300px;
           border-radius: 50%;
-          background: $selectBackground;
+          background: var(--selectBackground);
         }
 
         .user {
           margin-left: 30px;
 
           .user-name {
-            color: $textColor;
+            color: var(--textColor);
             font-size: 36px;
           }
 
           .theme-name {
-            color: $textColor;
+            color: var(--textColor);
             margin: 20px 0 5px 0;
             font-size: 16px;
           }
 
           select {
-            background: $selectBackground;
-            border: 1px solid $accentBackground;
-            color: $textColor;
+            background: var(--selectBackground);
+            border: 1px solid var(--accentBackground);
+            color: var(--textColor);
             width: 300px;
             padding: 5px;
             border-radius: 3px;
           }
 
           .change-password {
-            color: $textColor;
+            color: var(--textColor);
             text-decoration: underline;
             font-size: 12px;
             cursor: pointer;
@@ -194,7 +207,7 @@ export default Vue.extend({
 
             &:hover {
               text-decoration: none;
-              color: $accentTextColor;
+              color: var(--accentTextColor);
             }
           }
         }
@@ -206,9 +219,9 @@ export default Vue.extend({
         justify-content: center;
 
         .change-password-form {
-          background: $buttonHoverBackground;
+          background: var(--buttonHoverBackground);
           border-radius: 5px;
-          border: 1px solid $accentBackground;
+          border: 1px solid var(--accentBackground);
           padding: 20px;
           width: 400px;
 
@@ -216,7 +229,7 @@ export default Vue.extend({
             font-size: 24px;
             margin-bottom: 15px;
             text-align: center;
-            color: $textColor;
+            color: var(--textColor);
           }
 
           .form-field {
@@ -225,14 +238,14 @@ export default Vue.extend({
             label {
               display: block;
               font-size: 12px;
-              color: $mainTextColor;
+              color: var(--mainTextColor);
             }
             input {
               outline: none;
               background: none;
               border: none;
-              color: $accentTextColor;
-              border-bottom: 1px solid $accentBackground;
+              color: var(--accentTextColor);
+              border-bottom: 1px solid var(--accentBackground);
               width: 100%;
               padding: 3px;
             }
@@ -245,15 +258,15 @@ export default Vue.extend({
 
             button {
               width: 150px;
-              background: $buttonBackground;
+              background: var(--buttonBackground);
               border: none;
               cursor: pointer;
               padding: 10px;
               border-radius: 5px;
               font-size: 16px;
               &:hover {
-                color: $buttonHoverBackground;
-                background: $textColor;
+                color: var(--buttonHoverBackground);
+                background: var(--textColor);
               }
             }
           }
