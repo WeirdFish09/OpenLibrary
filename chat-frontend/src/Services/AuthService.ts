@@ -4,9 +4,9 @@ const token = 'eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNob
 
 class AuthService {
     getToken() {
-        // return localStorage.getItem('token');
+        return localStorage.getItem('token') || '';
 
-        return token;
+        //return token;
     }
 
     checkToken() {

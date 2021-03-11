@@ -8,12 +8,14 @@ const token = 'eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNob
 })
 export class AuthService {
   getToken() {
-    return token;
+    return localStorage.getItem('token');
+
+    // return token;
   }
 
   checkToken() {
     if (!this.getToken()) {
-        this.logout();
+      this.logout();
     }
   }
 
