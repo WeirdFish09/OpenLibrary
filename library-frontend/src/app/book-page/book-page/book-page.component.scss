@@ -1,8 +1,10 @@
+@import '../../../styles/variables.scss'; 
+
 .book-page {
     width: 100%;
     padding: 30px 3%;
     height: calc(100vh - 75px);
-    background: #1e1e1e;
+    background: var(--pageBackground);
 
     > div {
         display: flex;
@@ -14,7 +16,7 @@
     justify-content: space-between;
     align-items: center;
     .toChat {
-        color: #aaaaaa;
+        color: var(--darkTextColor);
         text-decoration: underline;
         cursor: pointer;
 
@@ -38,7 +40,7 @@
 }
 
 .book-data {
-    background-color: #303030;
+    background-color: var(--formsBackground);
     width: 70%;
     padding: 20px;
     height: fit-content;
@@ -46,7 +48,7 @@
 
     .title {
         font-size: 30px;
-        color: #f0f0f0;
+        color: var(--mainTextColor);
         margin-bottom: 10px;
     }
 
@@ -55,7 +57,7 @@
         margin-bottom: 15px;
 
         .author, .genres {
-            color: #cccccc;
+            color: var(--textColor);
             padding-right: 30px;
 
             a {
@@ -71,20 +73,20 @@
                 display: inline-block;
                 margin: 0 3px;
                 padding: 0 5px;
-                color: #cccccc;
+                color: var(--textColor);
                 border-radius: 3px;
-                background: #494949;
+                background: var(--accentBackground);
 
                 &:hover {
-                    background: #cccccc;
-                    color: #494949;
+                    background: var(--textColor);
+                    color: var(--accentBackground);
                 }
             }
         }
     }
 
     .description {
-        color: white;
+        color: var(--accentTextColor);
         font-size: 16px;
         line-height: 1.88;
 

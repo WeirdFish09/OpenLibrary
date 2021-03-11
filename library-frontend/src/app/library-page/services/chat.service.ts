@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class ChatService {
   constructor(private http: HttpClient) { }
 
-  assignToChat() {
-    return this.http.post("chats/assign", {});
+  assignToChat(chatId: string) {
+    return this.http.post(`chats/assign?chatId=${chatId}`, {});
   }
 }

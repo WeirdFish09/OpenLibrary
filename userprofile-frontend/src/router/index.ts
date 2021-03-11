@@ -43,7 +43,8 @@ const routes: Array<RouteConfig> = [
       }
       next();
     }
-  }
+  },
+  { path: '*', redirect: '/Login' }
 ]
 
 const router = new VueRouter({

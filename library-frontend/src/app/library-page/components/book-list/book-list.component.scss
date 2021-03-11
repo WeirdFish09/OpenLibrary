@@ -4,7 +4,7 @@
     width: 100%;
     padding: 30px 3%;
     height: calc(100vh - 75px);
-    background: #1e1e1e;
+    background: var(--pageBackground);
     overflow-y: auto;
 }
 
@@ -16,7 +16,7 @@
     padding-left: 15px;
 
     .name {
-        color: #e5e5e5;
+        color: var(--mainTextColor);
         display: flex;
         align-items: center;
 
@@ -27,7 +27,7 @@
         }
 
         .add_button {
-            color: #cccccc;
+            color: var(--textColor);
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -35,7 +35,7 @@
             padding: 5px 10px 5px 5px;
 
             &:hover {
-                color: #e5e5e5;
+                color: var(--mainTextColor);
             }
         }
     }
@@ -43,7 +43,7 @@
     .search-box {
         display: flex;
         align-items: center;
-        color: #cccccc;
+        color: var(--textColor);
 
         input {
             margin-left: 5px;
@@ -52,13 +52,13 @@
             background: none;
             border: none;
             padding: 5px;
-            color: white;
+            color: var(--accentTextColor);
         }
     }
 }
 
 .line {
-    border-bottom: 1px solid #414141;
+    border-bottom: 1px solid var(--selectBackground);
 }
 
 .book-list {
@@ -82,7 +82,7 @@
     
     .seach-name {
         font-size: 24px;
-        color: #cccccc;
+        color: var(--textColor);
     }
 
     .author {
@@ -93,13 +93,13 @@
             border: 0;
             background: none;
             border: none;
-            border-bottom: 1px solid #414141;
+            border-bottom: 1px solid var(--selectBackground);
             padding: 5px;
             color: white;
         }
     }
     .genres {
-        color: #aaaaaa;
+        color: var(--darkTextColor);
         
         .seach-name {
             margin-bottom: 10px;
@@ -128,13 +128,13 @@
     width: 100%;
     .page-number {
         margin: 0 6px;
-        color: #aaaaaa;
+        color: var(--darkTextColor);
         cursor: pointer;
         padding: 3px 5px;
         border-radius: 3px;
     }
     .active {
-        color: #cccccc;
-        background: #494949;;
+        color: var(--textColor);
+        background: var(--accentBackground);;
     }
 }

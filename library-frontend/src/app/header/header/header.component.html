@@ -13,11 +13,8 @@
     </div>
 
     <div class="user-data">
-        <img src="{{ userLogoLink }}" width="40px" height="40px" [matMenuTriggerFor]="menu">
-        
-        <mat-menu #menu="matMenu" >
-            <button mat-menu-item class="user-menu">Settings</button>
-            <button mat-menu-item>Logout</button>
-        </mat-menu>
+        <p class="userName" (click)="toUserProfile()">{{ getUserName() }}</p>
+        <img src="{{ userLogoLink }}" width="40px" height="40px" (click)="toUserProfile()">
+        <p class="logout" (click)="logout()">Exit</p>
     </div>
 </div>
