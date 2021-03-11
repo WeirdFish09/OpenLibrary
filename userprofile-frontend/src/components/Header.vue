@@ -14,8 +14,8 @@
         </div>
 
         <div class="user-data active">
-            <p>Profile</p>
-            <img src="@/assets/userLogo.png" width="40px" height="40px" @click="logout()">
+            <img src="@/assets/userLogo.png" width="40px" height="40px">
+            <p @click="logout()">Exit</p>
         </div>
     </div> 
 </template>
@@ -23,6 +23,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import userService from '@/services/userService';
+import themeService, { Theme } from '@/services/themeService';
 
 export default Vue.extend({
     name: 'Header',
@@ -50,7 +51,8 @@ export default Vue.extend({
         display: flex;
         justify-content: space-between;
         padding: 10px 3%;
-        background: $blocksBackground;
+        background: var(--blocksBackground);
+        border-bottom: 1px solid var(--blocksBorder);
         height: 75px;
     }
 
@@ -62,7 +64,7 @@ export default Vue.extend({
             margin: 0 30px;
             cursor: pointer;
             border-radius: 30px;
-            background: $accentBackground;
+            background: var(--accentBackground);
             img {
                 width: 50px;
                 height: 50px;
@@ -81,15 +83,15 @@ export default Vue.extend({
             text-align: center;
             padding: 5px;
             cursor: pointer;
-            color: $textColor;
+            color: var(--textColor);
             &.active {
-                color: $accentTextColor;
-                background-color: $accentBackground;
+                color: var(--accentTextColor);
+                background-color: var(--accentBackground);
             }
 
             &:not(.active):hover {
-                background-color: $accentHover;
-                color: $textColor;
+                background-color: var(--accentHover);
+                color: var(--textColor);
             }
         }
     }
@@ -99,18 +101,18 @@ export default Vue.extend({
         align-items: center;
         img {
             cursor: pointer;
-            background-color: $accentBackground;
+            background-color: var(--accentBackground);
             border-radius: 25px;
 
             &:hover {
-                background-color: $accentHover;
+                background-color: var(--accentHover);
             }
         }
         p {
-            color: $textColor;
+            color: var(--textColor);
             text-decoration: underline;
             cursor: pointer;
-            margin-right: 10px;
+            margin-left: 10px;
             font-size: 12px;
 
             &:hover {

@@ -1,15 +1,53 @@
-$blocksBackground: #2d2d2d; 
-$formsBackground: #303030; 
-$accentBackground: #494949; 
-$accentHover: #606060; 
-$pageBackground: #1e1e1e;
+:root {
+    --blocksBackground: #2d2d2d;
+    --blocksBorder: #2d2d2d;
+    --formsBackground: #303030; 
+    --formsBorder: #303030; 
+    --accentBackground: #494949; 
+    --accentHover: #606060; 
+    --pageBackground: #1e1e1e;
 
+    --textColor: #cccccc; 
+    --mainTextColor: #f5f5f5; 
+    --accentTextColor: #ffffff;
 
-$textColor: #cccccc; 
-$mainTextColor: #f5f5f5; 
-$accentTextColor: #ffffff;
+    --buttonBackground: #646464;
+    --buttonHoverBackground: #141414; 
+    --selectBackground: #414141; 
+}
 
+[theme="dark"] {
+    --blocksBackground: #2d2d2d;
+    --blocksBorder: #2d2d2d;
+    --formsBackground: #303030; 
+    --formsBorder: #303030; 
+    --accentBackground: #494949; 
+    --accentHover: #606060; 
+    --pageBackground: #1e1e1e;
 
-$buttonBackground: #646464;
-$buttonHoverBackground: #141414; 
-$selectBackground: #414141; 
+    --textColor: #cccccc; 
+    --mainTextColor: #f5f5f5; 
+    --accentTextColor: #ffffff;
+
+    --buttonBackground: #646464;
+    --buttonHoverBackground: #141414; 
+    --selectBackground: #414141; 
+}
+
+[theme="light"] {
+    --blocksBackground: #f0f0f0;
+    --blocksBorder: black;
+    --formsBackground: #fafafa;
+    --formsBorder: #a0a0a0; 
+    --accentBackground: #e5e5e5; 
+    --accentHover: #cccccc; 
+    --pageBackground: #ffffff;
+
+    --textColor: #141414; 
+    --mainTextColor: black; 
+    --accentTextColor: black;
+
+    --buttonBackground: #808080;
+    --buttonHoverBackground: #eeeeee; 
+    --selectBackground: #cccccc; 
+}

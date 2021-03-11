@@ -55,6 +55,11 @@ class UserService {
             .post(`${env.apiUrl}/users/changePassword`, { oldPassword, newPassword }, this.getAxiosRequestConfig());
     }
     
+    changeTheme(theme: string) {
+        return axios
+            .post(`${env.apiUrl}/users/theme`, { theme }, this.getAxiosRequestConfig());
+    }
+
     logout() {
         userTokenService.cleanToken();
         router.push({ name: 'Login' });
