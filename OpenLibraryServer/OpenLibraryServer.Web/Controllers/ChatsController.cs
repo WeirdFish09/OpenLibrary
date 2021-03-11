@@ -23,7 +23,7 @@ namespace OpenLibraryServer.Web.Controllers
         }
         
         [HttpGet("{chatId}")]
-        public async Task<ChatTO> GetById([FromQuery] string chatId)
+        public async Task<ChatTO> GetById([FromRoute] string chatId)
         {
             var guid = EntityHelpers.TryParseGuid(chatId);
             return await _chatService.GetById(guid);
@@ -36,8 +36,9 @@ namespace OpenLibraryServer.Web.Controllers
             return await _chatService.GetChatsByUser(userId);
         }
 
+        [Authorize]
         [HttpPost("assign")]
-        public async Task<IActionResult> AssignUserToChat([FromBody] string chatId)
+        public async Task<IActionResult> AssignUserToChat([FromQuery] string chatId)
         {  
             var userGuid = TokenHelpers.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var chatGuid = EntityHelpers.TryParseGuid(chatId);
@@ -45,8 +46,9 @@ namespace OpenLibraryServer.Web.Controllers
             return new NoContentResult();
         }
         
+        [Authorize]
         [HttpPost("unassign")]
-        public async Task<IActionResult> UnassignUserToChat([FromBody] string chatId)
+        public async Task<IActionResult> UnassignUserToChat([FromQuery] string chatId)
         {  
             var userGuid = TokenHelpers.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var chatGuid = EntityHelpers.TryParseGuid(chatId);

@@ -10,5 +10,6 @@ namespace OpenLibraryServer.Service.Interfaces
         Task<TokenTO> Login(LoginTO loginTO);
         Task Register(RegisterTO registerTo);
         Task ChangeUserPassword(ChangePasswordTO changePasswordTo, Guid userId);
+        Task ChangeUserTheme(ChangeThemeTO changeThemeTo, Guid userId);
     }
 }

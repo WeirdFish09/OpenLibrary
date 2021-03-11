@@ -80,10 +80,16 @@ namespace OpenLibraryServer.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("ChatMessageId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.HasKey("ChatId");
+
+                    b.HasIndex("ChatMessageId")
+                        .IsUnique();
 
                     b.ToTable("Chats");
                 });
@@ -107,9 +113,6 @@ namespace OpenLibraryServer.DataAccess.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("ChatMessageId");
-
-                    b.HasIndex("ChatId")
-                        .IsUnique();
 
                     b.HasIndex("UserId");
 
@@ -227,21 +230,24 @@ namespace OpenLibraryServer.DataAccess.Migrations
                     b.Navigation("Genre");
                 });
 
-            modelBuilder.Entity("OpenLibraryServer.Models.ChatMessage", b =>
+            modelBuilder.Entity("OpenLibraryServer.Models.Chat", b =>
                 {
-                    b.HasOne("OpenLibraryServer.Models.Chat", "Chat")
-                        .WithOne("LastMessage")
-                        .HasForeignKey("OpenLibraryServer.Models.ChatMessage", "ChatId")
+                    b.HasOne("OpenLibraryServer.Models.ChatMessage", "ChatMessage")
+                        .WithOne("Chat")
+                        .HasForeignKey("OpenLibraryServer.Models.Chat", "ChatMessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("ChatMessage");
+                });
+
+            modelBuilder.Entity("OpenLibraryServer.Models.ChatMessage", b =>
+                {
                     b.HasOne("OpenLibraryServer.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Chat");
 
                     b.Navigation("User");
                 });
@@ -279,9 +285,9 @@ namespace OpenLibraryServer.DataAccess.Migrations
                     b.Navigation("BookGenres");
                 });
 
-            modelBuilder.Entity("OpenLibraryServer.Models.Chat", b =>
+            modelBuilder.Entity("OpenLibraryServer.Models.ChatMessage", b =>
                 {
-                    b.Navigation("LastMessage");
+                    b.Navigation("Chat");
                 });
 
             modelBuilder.Entity("OpenLibraryServer.Models.User", b =>

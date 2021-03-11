@@ -32,7 +32,8 @@ namespace OpenLibraryServer.Service.HelperFunctions
         {
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString())
+                new Claim(ClaimTypes.NameIdentifier,user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName)
             };
 
             JwtSecurityToken token = new JwtSecurityToken(

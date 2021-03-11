@@ -129,5 +129,12 @@ namespace OpenLibraryServer.Service
             user.PasswordHash = PasswordHelpers.HashPassword(changePasswordTo.NewPassword, Encoding.UTF8.GetBytes(user.PasswordSalt));
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task ChangeUserTheme(ChangeThemeTO changeThemeTo, Guid userId)
+        {
+            var user = await GetDBUser(userId);
+            user.UITheme = changeThemeTo.Theme;
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

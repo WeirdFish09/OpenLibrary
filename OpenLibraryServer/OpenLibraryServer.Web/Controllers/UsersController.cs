@@ -1,6 +1,7 @@
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpenLibraryServer.Models.DTOs;
 using OpenLibraryServer.Service.Exceptions;
@@ -40,11 +41,21 @@ namespace OpenLibraryServer.Web.Controllers
             return await _userAuthService.GetUserById(guid);
         }
 
+        [Authorize]
         [HttpPost("changepassword")]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordTO passwordTo)
         {
             var userid = TokenHelpers.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             await _userAuthService.ChangeUserPassword(passwordTo, userid);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("theme")]
+        public async Task<IActionResult> ChangeTheme([FromBody] ChangeThemeTO changeThemeTo)
+        {
+            var userid = TokenHelpers.GetUserId(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            await _userAuthService.ChangeUserTheme(changeThemeTo, userid);
             return Ok();
         }
     }

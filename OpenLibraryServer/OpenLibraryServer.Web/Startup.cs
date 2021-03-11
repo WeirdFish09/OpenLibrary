@@ -39,7 +39,7 @@ namespace OpenLibraryServer.Web
             services.Configure<TokenConfig>(Configuration.GetSection("TokenConfig"));
             services.AddDbContext<OpenLibraryServerDBContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("OpenLibraryServer"));
+                options.UseNpgsql(Configuration.GetConnectionString("OpenLibraryServer")).EnableSensitiveDataLogging();
             });
             Configuration.GetSection("ConnectionString");
             services.AddTransient<IBookService, BookService>();

@@ -60,7 +60,7 @@ namespace OpenLibraryServer.Service
                 Message = message.Message,
                 Username = userName,
                 DateTime = message.DateTime,
-                UserId = message.UserId
+                UserId = message.UserId ?? Guid.Empty
             };            
         }
 
@@ -75,7 +75,7 @@ namespace OpenLibraryServer.Service
         public async Task<IEnumerable<ChatTO>> GetChatsByUser(Guid userId)
         {
             var chats = await _context.UserChats.Where(uc => uc.UserId == userId)
-                .Include(uc => uc.Chat)
+                .Include(uc => uc.Chat!)
                     .ThenInclude(c=> c.ChatMessage)
                         .ThenInclude(cm => cm.User)
                 .Select(uc => uc.Chat).ToListAsync();
@@ -136,13 +136,13 @@ namespace OpenLibraryServer.Service
 
         private MessageTO ConvertMessageToTO(ChatMessage message)
         {
-            return new MessageTO()
+            return message != null ? new MessageTO()
             {
                 Message = message.Message,
                 Username = message.User.UserName,
                 DateTime = message.DateTime,
-                UserId = message.UserId
-            };
+                UserId = message.UserId ?? Guid.Empty
+            } : null;
         }
     }
 }
