@@ -13,6 +13,7 @@ import { UrlInterceptor } from './interceptors/url.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BookPageModule } from './book-page/book-page.module';
 import { AddBookDialogComponent } from './components/dialogs/add-book-dialog/add-book-dialog.component';
+import { TokenInterceptor } from './interceptors/token.Interceptor';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,11 @@ import { AddBookDialogComponent } from './components/dialogs/add-book-dialog/add
     {
       provide: HTTP_INTERCEPTORS,
       useClass: UrlInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
       multi: true,
     },
     { provide: "BASE_API_URL", useValue: environment.apiUrl }

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from './library-page/services/auth.service';
+import { ThemeService } from './library-page/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'library-frontend';
+  title = 'Library';
+
+  constructor(
+    themeService: ThemeService,
+    authService: AuthService
+  ) {
+    authService.checkToken();
+    themeService.initTheme();
+  }
 }

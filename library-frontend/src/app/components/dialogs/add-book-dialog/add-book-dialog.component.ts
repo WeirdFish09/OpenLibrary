@@ -29,10 +29,10 @@ export class AddBookDialogComponent implements OnInit {
   
   ngOnInit() {
     this.bookForm = this.formBuilder.group({
-      title: ['12345678910', [Validators.required, Validators.min(3)]],
-      description: ['12345678910', [Validators.required, Validators.min(10)]],
-      author: ['12345678910', [Validators.required, Validators.min(3)]],
-      imageLink: ['12345678910', [Validators.required, Validators.min(3)]],
+      title: ['', [Validators.required, Validators.min(3)]],
+      description: ['', [Validators.required, Validators.min(10)]],
+      author: ['', [Validators.required, Validators.min(3)]],
+      imageLink: ['', [Validators.required, Validators.min(3)]],
       genres: [[]], //this.formBuilder.array([]),
     });
   }

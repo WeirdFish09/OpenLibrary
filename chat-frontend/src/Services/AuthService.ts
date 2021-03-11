@@ -23,8 +23,8 @@ class AuthService {
 
     getUserName() {
         const tokenData: any = jwt_decode(this.getToken()); 
-        const userId = tokenData['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
-        return userId;
+        const userName = tokenData['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+        return userName;
     }
 
     logout() {
