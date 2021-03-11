@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using OpenLibraryServer.DataAccess;
@@ -9,9 +10,10 @@ using OpenLibraryServer.DataAccess;
 namespace OpenLibraryServer.DataAccess.Migrations
 {
     [DbContext(typeof(OpenLibraryServerDBContext))]
-    partial class OpenLibraryServerDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210308134924_chatMessageFinal")]
+    partial class chatMessageFinal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,9 +85,6 @@ namespace OpenLibraryServer.DataAccess.Migrations
                     b.Property<Guid>("ChatMessageId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("ChatMessageId1")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
@@ -93,8 +92,6 @@ namespace OpenLibraryServer.DataAccess.Migrations
 
                     b.HasIndex("ChatMessageId")
                         .IsUnique();
-
-                    b.HasIndex("ChatMessageId1");
 
                     b.ToTable("Chats");
                 });
@@ -237,15 +234,11 @@ namespace OpenLibraryServer.DataAccess.Migrations
 
             modelBuilder.Entity("OpenLibraryServer.Models.Chat", b =>
                 {
-                    b.HasOne("OpenLibraryServer.Models.ChatMessage", null)
+                    b.HasOne("OpenLibraryServer.Models.ChatMessage", "ChatMessage")
                         .WithOne("Chat")
                         .HasForeignKey("OpenLibraryServer.Models.Chat", "ChatMessageId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("OpenLibraryServer.Models.ChatMessage", "ChatMessage")
-                        .WithMany()
-                        .HasForeignKey("ChatMessageId1");
 
                     b.Navigation("ChatMessage");
                 });
