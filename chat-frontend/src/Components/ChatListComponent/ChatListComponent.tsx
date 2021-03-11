@@ -24,23 +24,22 @@ class ChatListComponent extends React.Component<ChatListProp>{
     }
     private mapChats(){
         return this.props.chats.map(chat => {
-            console.log(chat);
             const lastMessage = chat.lastMessage ? chat.lastMessage.username + ": " + chat.lastMessage.message
                 : null;
             return (
-            <div key={chat.chatId} className={`${chat === this.props.activeChat ? styles.chatSelected : ""} ${styles.chatElement}`} onClick={() => this.handleSelectChat(chat.chatId)}>
-                <div className={styles.chatImgContainer}>
-                    <img src={chat.imageURL} className={styles.chatImg}></img>
-                </div>
-                <div className={styles.chatTextContainer}>
-                    <div className={styles.chatTitleContainer}>
-                        {chat.name}
+                <div key={chat.chatId} className={`${chat === this.props.activeChat ? styles.chatSelected : ""} ${styles.chatElement}`} onClick={() => this.handleSelectChat(chat.chatId)}>
+                    <div className={styles.chatImgContainer}>
+                        <img src={chat.imageURL} className={styles.chatImg}></img>
                     </div>
-                    <div className={styles.chatLastmessageContainer}>
-                        {lastMessage ?? "<i>No messages yet...</i>"}
+                    <div className={styles.chatTextContainer}>
+                        <div className={styles.chatTitleContainer}>
+                            {chat.name}
+                        </div>
+                        <div className={styles.chatLastmessageContainer}>
+                            {lastMessage ?? (<i>No messages yet...</i>)}
+                        </div>
                     </div>
                 </div>
-            </div>
             )
         })
     }

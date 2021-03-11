@@ -52,6 +52,9 @@ export default Vue.extend({
     toLogin() {
       this.$router.push({ name: 'Login' });
     }
+  },
+  mounted: () => {
+    document.title = 'Register | Library';
   }
 });
 </script>

@@ -8,6 +8,7 @@ import styles from "./ChatComponent.module.scss";
 import socketService from "../../Services/SocketService";
 import noData from '../../images/noData.png';
 import Moment from 'moment';
+import authService from '../../Services/AuthService';
 
 type ChatComponentProps = {
     activeChat: Chat;
@@ -15,18 +16,20 @@ type ChatComponentProps = {
     sendMessage: any;
 }
 const ChatComponent = (props: ChatComponentProps) => {
-    const userId = "276d73ae-5d47-46fa-9c97-ad2a351ea1d5";
     const [message, setMessage] = useState("");
 
+    const userId = authService.getUserId();
+
+    const scroll = ()  => {
+        const objDiv = document.getElementById("messagesList");
+        if (objDiv != null) {
+            objDiv.scrollTop = objDiv.scrollHeight;
+        }
+    };
+
     useEffect(() => {
-        setTimeout(() => {
-            const objDiv = document.getElementById("messagesList");
-            console.log(objDiv);
-            if (objDiv != null) {
-                objDiv.scrollTop = objDiv.scrollHeight;
-            }
-        }, 100);
-    }, [props.activeChat.chatId]);
+        scroll();
+    }, [props.messages]);
 
     const handleSend = () => {
         if (message == "") {
@@ -43,7 +46,7 @@ const ChatComponent = (props: ChatComponentProps) => {
     const messageViews = props.messages.map(message => {
         const msgClassName = message.userId === userId ? styles.messageOwn : styles.messageForeign;
         return (
-            <div className={`${styles.messageData} ${msgClassName}`}>
+            <div key={`${message.userId}${message.dateTime}`} className={`${styles.messageData} ${msgClassName}`}>
                 <div className={styles.userName}>{message.username}</div>
                 <div className={styles.message}>
                     {message.message}

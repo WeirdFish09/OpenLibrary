@@ -2,14 +2,14 @@
 
 .chatContainer {
     height: 100%;
-    background-color: $formsBackground;
+    background-color: var(--formsBackground);
 }
 
 .title{
     font-size: 2em;
-    color: $textColor;
-    border-bottom: 1px solid $buttonBackground;
-    background-color: $accentBackground;
+    color: var(--textColor);
+    border-bottom: 1px solid var(--buttonBackground);
+    background-color: var(--accentBackground);
     padding: 10px;
 }
 
@@ -19,7 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $textColor;
+    color: var(--textColor);
     font-size: 1.5em;
     flex-direction: column;
 
@@ -29,11 +29,14 @@
 }
 .chatData {
     height: 100%;
-    
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+
     .inputContainer {
         height: 50px;
         padding: 5px 10px;
-        background-color: $accentBackground;
+        background-color: var(--accentBackground);
         display: flex;
         align-items: center;
 
@@ -42,12 +45,12 @@
             background: none;
             outline: none;
             border: none;
-            caret-color: $textColor;
-            color: $mainTextColor;
+            caret-color: var(--textColor);
+            color: var(--mainTextColor);
             font-size: 14px;
 
             &::placeholder {
-                color: $placeholderColor;
+                color: var(--placeholderColor);
             }
         }
 
@@ -60,7 +63,7 @@
             outline: none;
 
             &:hover {
-                color: $mainTextColor;
+                color: var(--mainTextColor);
             }
         }
     }
@@ -80,7 +83,7 @@
                 max-width: 50%;
                 margin: 0 20px;
                 border-radius: 5px;
-                background-color: $buttonBackground;
+                background-color: var(--messageBackground);
                 padding: 3px 10px;
                 margin-top: 10px;
                 position: relative;
@@ -91,11 +94,11 @@
                 }
 
                 .message {
-                    color: $mainTextColor;
+                    color: var(--mainTextColor);
                 }
 
                 .dateTime {
-                    color: $textColor;
+                    color: var(--textColor);
                     font-size: 12px;
                     display: flex;
                     justify-content: flex-end;
@@ -111,7 +114,7 @@
                         width: 8px;
                         height: 8px;
                         border: 4px solid;
-                        border-color: transparent transparent $buttonBackground $buttonBackground;
+                        border-color: transparent transparent var(--messageBackground) var(--messageBackground);
                     }
 
                     .userName {
@@ -129,7 +132,7 @@
                         width: 8px;
                         height: 8px;
                         border: 4px solid;
-                        border-color: transparent $buttonBackground $buttonBackground transparent;
+                        border-color: transparent var(--messageBackground) var(--messageBackground) transparent;
                     }
                 }
             }

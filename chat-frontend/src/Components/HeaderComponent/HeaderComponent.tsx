@@ -5,17 +5,28 @@ import userLogo from '../../images/userLogo.png';
 import { store } from '../../Redux/Store';
 import socketService from '../../Services/SocketService';
 import './HeaderComponent.scss';
+import authService from '../../Services/AuthService';
 
 type HeaderProps = {
     configureSocket: any
 }
 const HeaderComponent = (props: HeaderProps) => {
+    authService.checkToken();
+
     useEffect(() => {
         props.configureSocket();
     })
 
     const toUserProfile = () => {
         window.location.pathname = '/user-profile';
+    };
+
+    const toLibrary = () => {
+        window.location.pathname = '/library'
+    };
+
+    const logout = () => {
+        authService.logout();
     };
 
     return (
@@ -28,14 +39,15 @@ const HeaderComponent = (props: HeaderProps) => {
                 </div>
 
                 <div className="menu">
-                    <div className="menu-item "><a href="/">Library</a></div>
+                    <div className="menu-item" onClick={() => toLibrary()}>Library</div>
                     <div className="menu-item active">Chat</div>
                 </div>
             </div>
 
             <div className="user-data">
-                <p onClick={() => toUserProfile()}>Profile</p>
-                <img src={userLogo} width="40px" height="40px"></img>
+                <p className="userName" onClick={() => toUserProfile()}>{authService.getUserName()}</p>
+                <img src={userLogo} width="40px" height="40px" onClick={() => toUserProfile()}></img>
+                <p className="logout" onClick={() => logout()}>Exit</p>
             </div>
         </div>
     )

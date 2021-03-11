@@ -14,8 +14,9 @@
         </div>
 
         <div class="user-data active">
+            <p class="userName">{{ getUserName }}</p>
             <img src="@/assets/userLogo.png" width="40px" height="40px">
-            <p @click="logout()">Exit</p>
+            <p class="logout" @click="logout()">Exit</p>
         </div>
     </div> 
 </template>
@@ -23,6 +24,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import userService from '@/services/userService';
+import userTokenService from '@/services/userTokenService';
 import themeService, { Theme } from '@/services/themeService';
 
 export default Vue.extend({
@@ -39,6 +41,11 @@ export default Vue.extend({
         },
         toChat() {
             window.location.pathname = '/chat';
+        }
+    },
+    computed: {
+        getUserName() {
+            return userTokenService.getUserName();
         }
     }
 })
@@ -110,13 +117,19 @@ export default Vue.extend({
         }
         p {
             color: var(--textColor);
-            text-decoration: underline;
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 12px;
 
-            &:hover {
-                text-decoration: none;
+            &.logout {
+                text-decoration: underline;
+                cursor: pointer;
+                margin-left: 10px;
+                font-size: 12px;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+
+            &.userName {
+                margin-right: 10px;
             }
         }
     }

@@ -141,6 +141,7 @@ export default Vue.extend({
           const errorData = error.response.data; 
           console.log(errorData);
       });
+    document.title = 'Profile | Library';
   }
 });
 </script>

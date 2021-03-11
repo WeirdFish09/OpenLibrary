@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 
 .chatSelected{
-    background-color: #1966b3;
+    background-color: var(--selected);
 }
 
 .chatImg{
@@ -12,7 +12,7 @@
 
 .chatsContainer {
     height: 100%;
-    background-color: $accentBackground;
+    background-color: var(--accentBackground);
     padding: 10px 0;
 }
 
@@ -21,7 +21,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: $textColor;
+    color: var(--textColor);
 }
 
 .chatElement{
@@ -40,7 +40,7 @@
 
     .chatTextContainer{
         width: 100%;
-        padding: 20px 5px;
+        padding: 10px 5px;
     }
     
     .chatTitleContainer{
@@ -49,17 +49,22 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        color: $textColor;
+        color: var(--textColor);
         font-weight: 500;
     }
 
     .chatLastmessageContainer {
-        color: $darkTextColor;
+        color: var(--darkTextColor);
+        
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;  
     }
 }
 
 .chatElement:not(:last-child) {
-    border-bottom: 1px solid $buttonBackground;
+    border-bottom: 1px solid var(--buttonBackground);
     padding-bottom: 15px;
     margin-bottom: 10px;
 }
