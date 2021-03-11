@@ -53,7 +53,7 @@ export class BookPageComponent implements OnInit {
     // window.open(`http://localhost:4200/chat/${this.book.chatId}`,"_self")
     // this.router.navigate(['/chat', this.book.chatId]);
     this.chatService.assignToChat(this.book.chatId).subscribe(_ => {
-      // this.router.navigate(['/chat', this.book.chatId]);
+      alert(`Successfully added to chat "${this.book.title}"`);
     });
   }
 }

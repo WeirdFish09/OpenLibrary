@@ -19,6 +19,10 @@ export class HeaderComponent implements OnInit {
     window.location.pathname = '/user-profile';
   }
 
+  toChat(): void {
+    window.location.pathname = '/chats';
+  }
+
   logout() : void {
     this.authService.logout();
   }
