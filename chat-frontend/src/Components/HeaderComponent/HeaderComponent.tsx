@@ -22,7 +22,7 @@ const HeaderComponent = (props: HeaderProps) => {
     };
 
     const toLibrary = () => {
-        window.location.pathname = '/library'
+        window.location.pathname = '/';
     };
 
     const logout = () => {

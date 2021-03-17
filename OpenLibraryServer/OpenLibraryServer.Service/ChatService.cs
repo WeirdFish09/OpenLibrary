@@ -60,7 +60,8 @@ namespace OpenLibraryServer.Service
                 Message = message.Message,
                 Username = userName,
                 DateTime = message.DateTime,
-                UserId = message.UserId ?? Guid.Empty
+                UserId = message.UserId ?? Guid.Empty,
+                ChatId = message.ChatId
             };            
         }
 
@@ -98,12 +99,18 @@ namespace OpenLibraryServer.Service
 
         public async Task AssignUserToChat(Guid userId, Guid chatId)
         {
-            var userChat = new UserChats()
+            var userChat = await _context.UserChats.Where(uc => uc.ChatId == chatId && uc.UserId == userId)
+                .FirstOrDefaultAsync();
+            if (userChat != null)
+            {
+                return;
+            }
+            var newUserChat = new UserChats()
             {
                 UserId = userId,
                 ChatId = chatId
             };
-            await _context.UserChats.AddAsync(userChat);
+            await _context.UserChats.AddAsync(newUserChat);
             await _context.SaveChangesAsync();
         }
 
@@ -141,7 +148,8 @@ namespace OpenLibraryServer.Service
                 Message = message.Message,
                 Username = message.User.UserName,
                 DateTime = message.DateTime,
-                UserId = message.UserId ?? Guid.Empty
+                UserId = message.UserId ?? Guid.Empty,
+                ChatId = message.ChatId
             } : null;
         }
     }

@@ -71,7 +71,7 @@ namespace OpenLibraryServer.Web
                         {
                             var accessToken = context.Request.Query["access_token"];
                             var path = context.HttpContext.Request.Path;
-                            if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chat")))
+                            if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/chathub")))
                             {
                                 context.Token = accessToken;
                             }
@@ -114,7 +114,7 @@ namespace OpenLibraryServer.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapHub<ChatHub>("/chat");
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }

@@ -27,6 +27,6 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
-    window.location.pathname = '/Login';
+    window.location.pathname = '/login';
   }
 }

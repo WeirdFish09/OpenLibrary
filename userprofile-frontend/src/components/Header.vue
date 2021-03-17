@@ -3,7 +3,7 @@
         <div class="left-part">
             <div class="icon-block">
                 <a routerLink="/">
-                    <img src="@/assets/logo.png" />
+                    <img src="@/assets/logo.png" @click="toLibrary()" />
                 </a>
             </div>
             
@@ -40,7 +40,7 @@ export default Vue.extend({
             window.location.pathname = '/';
         },
         toChat() {
-            window.location.pathname = '/chat';
+            window.location.pathname = '/chats';
         }
     },
     computed: {

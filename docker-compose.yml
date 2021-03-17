@@ -12,18 +12,19 @@ services:
         volumes:
             - data:/var/lib/postgresql/data
     front-end:
-        build: ./library-frontend
+        build: .
         container_name: front-end
+        tty: true
         ports:
-            - 4200:4200
-        command: >
-            bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
-
+            - 10010:80
+    service:
+        container_name: service
+        tty: true
+        build: OpenLibraryServer
+        ports: 
+            - 5100:5000
+            - 5101:5001
     
 volumes: 
     data: 
-        driver: local
-
-
-
-        
+        driver: local   

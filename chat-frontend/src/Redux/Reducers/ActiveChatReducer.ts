@@ -1,6 +1,7 @@
-import { CHAT_LOAD_SELECTED, ActionType } from "../ActionTypes";
+import { CHAT_LOAD_SELECTED, ActionType, MESSAGES_LOAD_NEW } from "../ActionTypes";
 import { Chat } from "../../Models/Chat";
 import { State } from "../State";
+import { act } from "react-dom/test-utils";
 
 const initialState: Chat = {
     chatId: "",
@@ -9,7 +10,8 @@ const initialState: Chat = {
         message: "",
         username: "",
         dateTime: 0,
-        userId: ""
+        userId: "",
+        chatId: ""
     },
     name: ""
 };

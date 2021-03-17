@@ -27,7 +27,7 @@ class ChatListComponent extends React.Component<ChatListProp>{
             const lastMessage = chat.lastMessage ? chat.lastMessage.username + ": " + chat.lastMessage.message
                 : null;
             return (
-                <div key={chat.chatId} className={`${chat === this.props.activeChat ? styles.chatSelected : ""} ${styles.chatElement}`} onClick={() => this.handleSelectChat(chat.chatId)}>
+                <div key={chat.chatId} className={`${chat.chatId === this.props.activeChat.chatId ? styles.chatSelected : ""} ${styles.chatElement}`} onClick={() => this.handleSelectChat(chat.chatId)}>
                     <div className={styles.chatImgContainer}>
                         <img src={chat.imageURL} className={styles.chatImg}></img>
                     </div>

@@ -12,7 +12,7 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.userLogoLink = "assets/images/userLogo.png";
+    this.userLogoLink = "/angular/assets/images/userLogo.png";
   }
 
   toUserProfile(): void {

@@ -10,7 +10,7 @@ class SocketService{
 
     configure(dispatch: any) {
         this.connection = new HubConnectionBuilder()
-            .withUrl(Configuration.socketUrl + '/chat', {accessTokenFactory: () => authService.getToken()})
+            .withUrl(Configuration.socketUrl + '/chathub', {accessTokenFactory: () => authService.getToken()})
             .withAutomaticReconnect()
             .build();
 
