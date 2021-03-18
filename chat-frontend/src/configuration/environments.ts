@@ -1,4 +1,4 @@
 export const Configuration = {
-    webApiUrl: 'http://93.73.198.144:10010/api',
-    socketUrl: 'http://93.73.198.144:10015'
+    webApiUrl: 'http://23.101.112.111:10010/api',
+    socketUrl: 'http://23.101.112.111:10015'
 };
