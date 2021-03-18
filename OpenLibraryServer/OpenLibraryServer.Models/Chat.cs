@@ -10,7 +10,7 @@ namespace OpenLibraryServer.Models
         [Key]
         public Guid ChatId { get; set; }
         public string Name { get; set; }
-        public Guid ChatMessageId { get; set; }
+        public Guid? ChatMessageId { get; set; }
 
         public ChatMessage ChatMessage { get; set; }
     }
