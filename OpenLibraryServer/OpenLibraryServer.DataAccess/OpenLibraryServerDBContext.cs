@@ -27,9 +27,7 @@ namespace OpenLibraryServer.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Chat>().HasOne<ChatMessage>(c => c.ChatMessage).WithOne(cm => cm.Chat)
-               .HasForeignKey<Chat>(c => c.ChatMessageId).IsRequired();
-            // modelBuilder.Entity<ChatMessage>().HasOne<Chat>(cm => cm.Chat).WithOne()
-            //     .HasForeignKey<Chat>(c => c.ChatMessageId);
+               .HasForeignKey<Chat>(c => c.ChatMessageId);
             base.OnModelCreating(modelBuilder);
         }
     }
